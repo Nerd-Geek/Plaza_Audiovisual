@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class LoginUserDTO {
     @NotBlank(message = "El nombre del usuario no puede estar vacío")
-    private String userName;
+    private String username;
     @NotBlank(message = "La contraseña no puede estar vacía")
     private String password;
 }

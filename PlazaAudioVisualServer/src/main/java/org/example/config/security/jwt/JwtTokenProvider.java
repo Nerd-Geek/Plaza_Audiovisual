@@ -37,7 +37,7 @@ public class JwtTokenProvider {
                 .setSubject(user.getId())
                 .setIssuedAt(new Date())
                 .setExpiration(tokenExpirationDate)
-                .claim("name", user.getFirstName())
+                .claim("name", user.getName())
                 .claim("roles", user.getRoles().stream()
                         .map(UserRol::name)
                         .collect(Collectors.joining(", "))

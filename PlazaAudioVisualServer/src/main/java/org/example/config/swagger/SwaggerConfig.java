@@ -31,8 +31,8 @@ public class SwaggerConfig {
     private ApiInfo metaInfo() {
 
         return new ApiInfo(
-                "API REST Peluquería",
-                "API REST para una peluquería",
+                "API REST Plaza Audiovisual",
+                "API REST Plaza Audiovisual",
                 "1.1",
                 "Terms of Service",
                 new Contact("IES Luis Vives", "https://www.iesluisvives.es/",

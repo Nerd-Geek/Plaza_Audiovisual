@@ -28,8 +28,8 @@ import javax.validation.constraints.*;
 public class User implements UserDetails {
     private String id;
     @Column(unique = true)
-    private String userName;
-    private String firstName;
+    private String username;
+    private String name;
     private String lastName;
     @Column(unique = true)
     private String email;
@@ -45,10 +45,10 @@ public class User implements UserDetails {
     @ToString.Exclude
     private Set<Login> logins;
 
-    public User(String userName, String firstName, String lastName, String email, String phoneNumber, String password, String image, String description, Set<UserRol> roles, Set<Media> medias, Set<Login> logins) {
+    public User(String username, String name, String lastName, String email, String phoneNumber, String password, String image, String description, Set<UserRol> roles, Set<Media> medias, Set<Login> logins) {
         this.id = UUID.randomUUID().toString();
-        this.userName = userName;
-        this.firstName = firstName;
+        this.username = username;
+        this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -70,22 +70,23 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    @NotBlank(message = "El nombre del usuario no puede estar vacío")
+
+
     public String getUsername() {
-        return userName;
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @NotBlank(message = "El primer nombre del usuario no puede estar vacío")
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @NotBlank(message = "El apelliodo del usuario no puede estar vacío")
@@ -152,7 +153,7 @@ public class User implements UserDetails {
     }
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     public Set<Media> getMedias() {
         return medias;
     }
@@ -162,7 +163,7 @@ public class User implements UserDetails {
     }
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     public Set<Login> getLogins() {
         return logins;
     }

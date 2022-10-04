@@ -1,5 +1,6 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -68,7 +69,7 @@ public class Login {
     }
 
     @ManyToOne
-    @JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)
+    @JsonBackReference
     @NotNull(message = "El usuario no puede estar nulo")
     public User getUser() {
         return user;

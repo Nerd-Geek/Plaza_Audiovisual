@@ -1,5 +1,6 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -85,9 +86,8 @@ public class Media {
         this.dimension = dimension;
     }
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)
-    @NotNull(message = "El usuario no puede estar nulo")
     public User getUser() {
         return user;
     }

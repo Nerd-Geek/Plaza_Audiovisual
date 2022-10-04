@@ -1,6 +1,8 @@
 package org.example.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.example.model.Media;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -17,9 +19,9 @@ public class UserDTO {
     @NotBlank(message = "El id no puede estar vacío")
     private String id;
     @NotBlank(message = "El nombre de usuario no puede estar vacío")
-    private String userName;
+    private String username;
     @NotBlank(message = "El nombre del usuario no puede estar vacío")
-    private String firstName;
+    private String name;
     @NotBlank(message = "El apellido del usuario no puede estar vacío")
     private String lastName;
     @Email(regexp = ".*@.*\\..*", message = "Email debe ser válido")
@@ -31,4 +33,6 @@ public class UserDTO {
     private String description;
     @NotNull(message = "Los roles no pueden ser nulos")
     private Set<String> usersRoles;
+    @JsonManagedReference
+    private Set<Media> medias;
 }

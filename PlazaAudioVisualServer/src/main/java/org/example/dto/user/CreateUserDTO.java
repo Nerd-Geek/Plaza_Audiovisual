@@ -18,9 +18,9 @@ public class CreateUserDTO {
     @NotBlank(message = "El id no puede estar vacío")
     private String id;
     @NotBlank(message = "El nombre de usuario no puede estar vacío")
-    private String userName;
+    private String userername;
     @NotBlank(message = "El nombre del usuario no puede estar vacío")
-    private String firstName;
+    private String name;
     @NotBlank(message = "El apellido del usuario no puede estar vacío")
     private String lastName;
     @Email(regexp = ".*@.*\\..*", message = "Email debe ser válido")
@@ -35,10 +35,10 @@ public class CreateUserDTO {
     private String image;
     private String description;
 
-    public CreateUserDTO(String userName, String firstName, String lastName, String email, String phoneNumber, String password, String passwordConfirm, String image, String description) {
+    public CreateUserDTO(String userername, String name, String lastName, String email, String phoneNumber, String password, String passwordConfirm, String image, String description) {
         this.id = UUID.randomUUID().toString();
-        this.userName = userName;
-        this.firstName = firstName;
+        this.userername = userername;
+        this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;

@@ -47,14 +47,15 @@ public class UserService {
     public User save(CreateUserDTO newUser) {
         if (newUser.getPassword().equals(newUser.getPasswordConfirm())) {
             Set<UserRol> defaultRoles = new HashSet<>();
+            defaultRoles.add(UserRol.NORMAL);
             User user = User.builder()
                     .id(UUID.randomUUID().toString())
-                    .userName(newUser.getUserName())
-                    .firstName(newUser.getFirstName())
+                    .username(newUser.getUserername())
+                    .name(newUser.getName())
                     .lastName(newUser.getLastName())
                     .email(newUser.getEmail())
                     .phoneNumber(newUser.getPhoneNumber())
-                    .password(newUser.getPassword())
+                    .password(passwordEncoder.encode(newUser.getPassword()))
                     .image(newUser.getImage())
                     .roles(defaultRoles)
                     .build();
