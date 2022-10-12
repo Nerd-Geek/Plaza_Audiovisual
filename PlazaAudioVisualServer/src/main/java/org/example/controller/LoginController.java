@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(APIConfig.API_PATH + "/logins")
@@ -93,6 +94,16 @@ public class LoginController {
         Login login = loginRepository.findById(id).orElse(null);
         if (login == null) {
             throw new LoginNotFoundException(id);
+        } else {
+            return ResponseEntity.ok(loginMapper.toDTO(login));
+        }
+    }
+
+    @GetMapping("/{token}")
+    public ResponseEntity<LoginDTO> findByToken(@PathVariable String token) {
+        Login login = loginRepository.findByToken(token).orElse(null);
+        if (login == null) {
+            throw new LoginsNotFoundException();
         } else {
             return ResponseEntity.ok(loginMapper.toDTO(login));
         }

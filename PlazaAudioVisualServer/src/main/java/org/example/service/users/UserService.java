@@ -58,6 +58,7 @@ public class UserService {
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .image(newUser.getImage())
                     .roles(defaultRoles)
+                    .description(newUser.getDescription())
                     .build();
             try {
                 return userRepository.save(user);

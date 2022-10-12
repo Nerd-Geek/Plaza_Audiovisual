@@ -32,7 +32,7 @@ public class UserDTO {
     private String image;
     private String description;
     @NotNull(message = "Los roles no pueden ser nulos")
-    private Set<String> usersRoles;
+    private Set<String> roles;
     @JsonManagedReference
     private Set<Media> medias;
 }

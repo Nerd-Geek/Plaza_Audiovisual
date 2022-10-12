@@ -12,10 +12,7 @@ import org.example.dto.user.CreateUserDTO;
 import org.example.dto.user.UserDTO;
 import org.example.exceptions.GeneralBadRequestException;
 import org.example.exceptions.ServiceNotFoundException;
-import org.example.exceptions.user.UserNotFoundByEmailException;
-import org.example.exceptions.user.UserNotFoundByIdException;
-import org.example.exceptions.user.UserNotFoundByUsernameException;
-import org.example.exceptions.user.UsersNotFoundException;
+import org.example.exceptions.user.*;
 import org.example.mapper.UserMapper;
 import org.example.model.Login;
 import org.example.model.User;
@@ -161,13 +158,21 @@ public class UserController {
     })
     @PostMapping("/")
     public UserDTO nuevoUsuario(@RequestBody CreateUserDTO newUser) {
-        return userMapper.toDTO(userService.save(newUser));
+        if (userService.findByUsernameIgnoreCase(newUser.getUserername()).isPresent()) {
+            throw new UserNameDuplicatedException();
+        } else {
+            return userMapper.toDTO(userService.save(newUser));
+        }
     }
 
+    @ApiOperation(value = "Crear un usuario", notes = "Crea un usuario")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Created", response = UserDTO.class),
+            @ApiResponse(code = 400, message = "Bad Request", response = GeneralBadRequestException.class)
+    })
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> nuevoUsuario(
-            @RequestPart("user") CreateUserDTO createUserDTO,
-            @RequestPart("file") MultipartFile file) {
+            @RequestPart("file") MultipartFile file, @RequestPart("user") CreateUserDTO createUserDTO) {
 
         User user = userMapper.fromDTOCreate(createUserDTO);
 
@@ -195,7 +200,7 @@ public class UserController {
                 .phoneNumber(user.getPhoneNumber())
                 .image(user.getImage())
                 .description(user.getDescription())
-                .usersRoles(user.getRoles().stream().map(UserRol::name).collect(Collectors.toSet()))
+                .roles(user.getRoles().stream().map(UserRol::name).collect(Collectors.toSet()))
                 .token(jwtToken)
                 .build();
     }

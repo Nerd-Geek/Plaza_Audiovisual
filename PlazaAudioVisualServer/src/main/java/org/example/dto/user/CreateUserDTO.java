@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -18,12 +19,14 @@ public class CreateUserDTO {
     @NotBlank(message = "El id no puede estar vacío")
     private String id;
     @NotBlank(message = "El nombre de usuario no puede estar vacío")
+    @Column(unique = true)
     private String userername;
     @NotBlank(message = "El nombre del usuario no puede estar vacío")
     private String name;
     @NotBlank(message = "El apellido del usuario no puede estar vacío")
     private String lastName;
     @Email(regexp = ".*@.*\\..*", message = "Email debe ser válido")
+    @Column(unique = true)
     private String email;
     @Size(min = 9, max = 15)
     @NotBlank(message = "El número de teléfono no puede estar vacío")
