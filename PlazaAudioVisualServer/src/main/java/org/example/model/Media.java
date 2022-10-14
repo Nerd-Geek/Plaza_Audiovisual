@@ -26,6 +26,7 @@ public class Media {
     private String name;
     private String description;
     private int dimension;
+    @ToString.Exclude
     private User user;
 
     public Media(Double size, String type, String name, String description, int dimension) {
@@ -88,6 +89,7 @@ public class Media {
 
     @JsonBackReference
     @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     public User getUser() {
         return user;
     }

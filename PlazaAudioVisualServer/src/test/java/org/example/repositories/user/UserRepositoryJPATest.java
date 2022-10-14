@@ -41,9 +41,9 @@ public class UserRepositoryJPATest {
             .id("ec272c62-9d31-11ec-b909-0242ac120002")
             .username("nombre usuario")
             .name("nombre")
-            .lastName("apellido")
+            .lastname("apellido")
             .email("adsa@sdas.com")
-            .phoneNumber("123456789")
+            .phonenumber("123456789")
             .password("123")
             .description("descripcion")
             .roles(Set.of(UserRol.NORMAL, UserRol.ADMIN))
@@ -107,7 +107,7 @@ public class UserRepositoryJPATest {
                 () -> assertEquals(user.getId(), theUser.getId()),
                 () -> assertEquals(user.getUsername(), theUser.getUsername()),
                 () -> assertEquals(user.getName(), theUser.getName()),
-                () -> assertEquals(user.getLastName(), theUser.getLastName()),
+                () -> assertEquals(user.getLastname(), theUser.getLastname()),
                 () -> assertEquals(user.getEmail(), theUser.getEmail()),
                 () -> assertEquals(user.getPhoneNumber(), theUser.getPhoneNumber()),
                 () -> assertEquals(user.getPassword(), theUser.getPassword()),
@@ -125,9 +125,9 @@ public class UserRepositoryJPATest {
                 .id(UUID.randomUUID().toString())
                 .username("pepo")
                 .name("pepo")
-                .lastName("apellido")
+                .lastname("apellido")
                 .email("pepo@pepo.com")
-                .phoneNumber("123456789")
+                .phonenumber("123456789")
                 .password("$2a$10$Qar.LEjvMxWFsdgCQuQVU.5Eto7JqBzg3YEC94Dd6lOaNGlLirRtu")
                 .description("descripcion")
                 .roles(Set.of(UserRol.NORMAL, UserRol.ADMIN))
@@ -141,7 +141,7 @@ public class UserRepositoryJPATest {
                 () -> assertEquals(newUser.getId(), savedUser.getId()),
                 () -> assertEquals(newUser.getUsername(), savedUser.getUsername()),
                 () -> assertEquals(newUser.getName(), savedUser.getName()),
-                () -> assertEquals(newUser.getLastName(), savedUser.getLastName()),
+                () -> assertEquals(newUser.getLastname(), savedUser.getLastname()),
                 () -> assertEquals(newUser.getEmail(), savedUser.getEmail()),
                 () -> assertEquals(newUser.getPhoneNumber(), savedUser.getPhoneNumber()),
                 () -> assertEquals(newUser.getPassword(), savedUser.getPassword()),
@@ -159,9 +159,9 @@ public class UserRepositoryJPATest {
                 .id(UUID.randomUUID().toString())
                 .username("pepo")
                 .name("pepo")
-                .lastName("apellido")
+                .lastname("apellido")
                 .email("pepo@pepo.com")
-                .phoneNumber("123456789")
+                .phonenumber("123456789")
                 .password("$2a$10$Qar.LEjvMxWFsdgCQuQVU.5Eto7JqBzg3YEC94Dd6lOaNGlLirRtu")
                 .description("descripcion")
                 .roles(Set.of(UserRol.NORMAL, UserRol.ADMIN))
@@ -179,7 +179,7 @@ public class UserRepositoryJPATest {
                 () -> assertEquals(modUser.getId(), savedUser.getId()),
                 () -> assertEquals(modUser.getUsername(), savedUser.getUsername()),
                 () -> assertEquals(modUser.getName(), savedUser.getName()),
-                () -> assertEquals(modUser.getLastName(), savedUser.getLastName()),
+                () -> assertEquals(modUser.getLastname(), savedUser.getLastname()),
                 () -> assertEquals(modUser.getEmail(), savedUser.getEmail()),
                 () -> assertEquals(modUser.getPhoneNumber(), savedUser.getPhoneNumber()),
                 () -> assertEquals(modUser.getPassword(), savedUser.getPassword()),
@@ -197,9 +197,9 @@ public class UserRepositoryJPATest {
                 .id(UUID.randomUUID().toString())
                 .username("pepo")
                 .name("pepo")
-                .lastName("apellido")
+                .lastname("apellido")
                 .email("pepo@pepo.com")
-                .phoneNumber("123456789")
+                .phonenumber("123456789")
                 .password("$2a$10$Qar.LEjvMxWFsdgCQuQVU.5Eto7JqBzg3YEC94Dd6lOaNGlLirRtu")
                 .description("descripcion")
                 .roles(Set.of(UserRol.NORMAL, UserRol.ADMIN))

@@ -67,8 +67,9 @@ public class Login {
         this.instant = instance;
     }
 
-    @ManyToOne
     @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @NotNull(message = "El usuario no puede estar nulo")
     public User getUser() {
         return user;

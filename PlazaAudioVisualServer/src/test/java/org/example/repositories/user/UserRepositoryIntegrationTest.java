@@ -26,9 +26,9 @@ public class UserRepositoryIntegrationTest {
             .id("ec272c62-9d31-11ec-b909-0242ac120002")
             .username("nombre usuario")
             .name("nombre")
-            .lastName("apellido")
+            .lastname("apellido")
             .email("adsa@sdas.com")
-            .phoneNumber("123456789")
+            .phonenumber("123456789")
             .password("123")
             .description("descripcion")
             .roles(Set.of(UserRol.NORMAL, UserRol.ADMIN))
@@ -83,9 +83,9 @@ public class UserRepositoryIntegrationTest {
                 .id(UUID.randomUUID().toString())
                 .username("pepo")
                 .name("nombre")
-                .lastName("apellido")
+                .lastname("apellido")
                 .email("adsa@sdas.com")
-                .phoneNumber("123456789")
+                .phonenumber("123456789")
                 .password("123")
                 .description("descripcion")
                 .roles(Set.of(UserRol.NORMAL, UserRol.ADMIN))
@@ -98,7 +98,7 @@ public class UserRepositoryIntegrationTest {
                 () -> assertEquals(savedUser.getId(), newUser.getId()),
                 () -> assertEquals(savedUser.getUsername(), newUser.getUsername()),
                 () -> assertEquals(savedUser.getName(), newUser.getName()),
-                () -> assertEquals(savedUser.getLastName(), newUser.getLastName()),
+                () -> assertEquals(savedUser.getLastname(), newUser.getLastname()),
                 () -> assertEquals(savedUser.getEmail(), newUser.getEmail()),
                 () -> assertEquals(savedUser.getPhoneNumber(), newUser.getPhoneNumber()),
                 () -> assertEquals(savedUser.getPassword(), newUser.getPassword()),
@@ -129,7 +129,7 @@ public class UserRepositoryIntegrationTest {
                 () -> assertEquals(savedUser.getId(), savedUser.getId()),
                 () -> assertEquals(savedUser.getUsername(), savedUser.getUsername()),
                 () -> assertEquals(savedUser.getName(), savedUser.getName()),
-                () -> assertEquals(savedUser.getLastName(), savedUser.getLastName()),
+                () -> assertEquals(savedUser.getLastname(), savedUser.getLastname()),
                 () -> assertEquals(savedUser.getEmail(), savedUser.getEmail()),
                 () -> assertEquals(savedUser.getPhoneNumber(), savedUser.getPhoneNumber()),
                 () -> assertEquals(savedUser.getPassword(), savedUser.getPassword()),
@@ -147,9 +147,9 @@ public class UserRepositoryIntegrationTest {
                 .id("ec272c62-9d31-11ec-b909-0242ac120002")
                 .username("pepo")
                 .name("pepo")
-                .lastName("apellido")
+                .lastname("apellido")
                 .email("pepo@pepo.com")
-                .phoneNumber("123456789")
+                .phonenumber("123456789")
                 .password("$2a$10$Qar.LEjvMxWFsdgCQuQVU.5Eto7JqBzg3YEC94Dd6lOaNGlLirRtu")
                 .description("descripcion")
                 .roles(Set.of(UserRol.NORMAL, UserRol.ADMIN))
@@ -162,7 +162,7 @@ public class UserRepositoryIntegrationTest {
                 () -> assertEquals(savedUser.getId(), newUser.getId()),
                 () -> assertEquals(savedUser.getUsername(), newUser.getUsername()),
                 () -> assertEquals(savedUser.getName(), newUser.getName()),
-                () -> assertEquals(savedUser.getLastName(), newUser.getLastName()),
+                () -> assertEquals(savedUser.getLastname(), newUser.getLastname()),
                 () -> assertEquals(savedUser.getEmail(), newUser.getEmail()),
                 () -> assertEquals(savedUser.getPhoneNumber(), newUser.getPhoneNumber()),
                 () -> assertEquals(savedUser.getPassword(), newUser.getPassword()),
@@ -180,9 +180,9 @@ public class UserRepositoryIntegrationTest {
                 .id("ec272c62-9d31-11ec-b909-0242ac120012")
                 .username("pepo")
                 .name("pepo")
-                .lastName("apellido")
+                .lastname("apellido")
                 .email("pepo@pepo.com")
-                .phoneNumber("123456789")
+                .phonenumber("123456789")
                 .password("$2a$10$Qar.LEjvMxWFsdgCQuQVU.5Eto7JqBzg3YEC94Dd6lOaNGlLirRtu")
                 .description("descripcion")
                 .roles(Set.of(UserRol.NORMAL, UserRol.ADMIN))
@@ -204,7 +204,7 @@ public class UserRepositoryIntegrationTest {
                 () -> assertEquals(savedUser.getId(), savedUser.getId()),
                 () -> assertEquals(savedUser.getUsername(), savedUser.getUsername()),
                 () -> assertEquals(savedUser.getName(), savedUser.getName()),
-                () -> assertEquals(savedUser.getLastName(), savedUser.getLastName()),
+                () -> assertEquals(savedUser.getLastname(), savedUser.getLastname()),
                 () -> assertEquals(savedUser.getEmail(), savedUser.getEmail()),
                 () -> assertEquals(savedUser.getPhoneNumber(), savedUser.getPhoneNumber()),
                 () -> assertEquals(savedUser.getPassword(), savedUser.getPassword()),

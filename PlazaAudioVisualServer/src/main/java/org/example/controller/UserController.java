@@ -195,7 +195,7 @@ public class UserController {
                 .id(user.getId())
                 .username(user.getUsername())
                 .name(user.getName())
-                .lastName(user.getLastName())
+                .lastName(user.getLastname())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
                 .image(user.getImage())

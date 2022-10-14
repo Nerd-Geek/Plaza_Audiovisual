@@ -30,28 +30,32 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String username;
     private String name;
-    private String lastName;
+    private String lastname;
     @Column(unique = true)
     private String email;
-    @Column(unique = true)
-    private String phoneNumber;
+    //@Column(unique = true, name = "phonenumber")
+    @Column(name = "phone_number")
+    private String phonenumber;
     private String password;
     private String image;
     private String description;
     @ToString.Exclude
+    @Column(name = "user_roles")
     private Set<UserRol> roles;
     @ToString.Exclude
+    @Column(name = "media")
     private Set<Media> medias;
     @ToString.Exclude
+    @Column(name = "login")
     private Set<Login> logins;
 
-    public User(String username, String name, String lastName, String email, String phoneNumber, String password, String image, String description, Set<UserRol> roles, Set<Media> medias, Set<Login> logins) {
+    public User(String username, String name, String lastName, String email, String phonenumber, String password, String image, String description, Set<UserRol> roles, Set<Media> medias, Set<Login> logins) {
         this.id = UUID.randomUUID().toString();
         this.username = username;
         this.name = name;
-        this.lastName = lastName;
+        this.lastname = lastName;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.phonenumber = phonenumber;
         this.password = password;
         this.image = image;
         this.description = description;
@@ -90,12 +94,12 @@ public class User implements UserDetails {
     }
 
     @NotBlank(message = "El apelliodo del usuario no puede estar vacío")
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastName) {
+        this.lastname = lastName;
     }
 
     @Email(regexp = ".*@.*\\..*", message = "Email debe ser un email valido")
@@ -110,11 +114,11 @@ public class User implements UserDetails {
     @Size(min = 9, max = 15)
     @NotBlank(message = "El número de teléfono no puede estar vacío")
     public String getPhoneNumber() {
-        return phoneNumber;
+        return phonenumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 
     @NotBlank(message = "La password no puede estar vacía")
@@ -153,7 +157,7 @@ public class User implements UserDetails {
     }
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
     public Set<Media> getMedias() {
         return medias;
     }
@@ -163,7 +167,7 @@ public class User implements UserDetails {
     }
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
     public Set<Login> getLogins() {
         return logins;
     }
@@ -200,22 +204,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", password='" + password + '\'' +
-                ", image='" + image + '\'' +
-                ", description='" + description + '\'' +
-                ", roles=" + roles +
-                ", medias=" + medias +
-                '}';
     }
 }

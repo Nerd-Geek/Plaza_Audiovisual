@@ -48,9 +48,9 @@ public class LoginRestControllerMockMVCTest {
             .id("c55813de-cdba-42c6-9554-579e4368d946")
             .username("das")
             .name("Jaime")
-            .lastName("pepo")
+            .lastname("pepo")
             .email("pepo@pepo.com")
-            .phoneNumber("633623787")
+            .phonenumber("633623787")
             .password("123")
             .description("user")
             .build();
