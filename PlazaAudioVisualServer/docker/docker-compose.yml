@@ -16,20 +16,29 @@ services:
       - mariadb-network
     # restart: always
 
-  adminer:
-    image: adminer
-    container_name: adminer
-    # restart: always
-    ports:
-      - 8080:8080
-    networks:
-      - mariadb-network
-    depends_on:
-      - mariadb
-
 volumes:
   mariadb-volume:
 
 networks:
   mariadb-network:
     driver: bridge
+
+#Postgres Example
+#services:
+  #postgres:
+    #build: ./postgres
+    #image: postgres
+    #container_name: postgres_container
+    #volumes:
+      #- postgres-volume:/var/lib/postgresql/data
+    #ports:
+      #- "5432:5432"
+    #networks:
+      #- postgres-network
+
+    #volumes:
+      #postgres-volume:
+
+    #networks:
+      #postgres-network:
+        #driver: bridge

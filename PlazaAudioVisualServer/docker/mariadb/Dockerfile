@@ -1,4 +1,5 @@
 FROM yobasystems/alpine-mariadb:10
+#FROM yobasystems/alpine-postgres
 
 ENV MYSQL_ROOT_PASSWORD plaza123
 ENV MYSQL_USER user
