@@ -33,7 +33,6 @@ public class User implements UserDetails {
     private String lastname;
     @Column(unique = true)
     private String email;
-    //@Column(unique = true, name = "phonenumber")
     @Column(name = "phone_number")
     private String phonenumber;
     private String password;
@@ -73,8 +72,6 @@ public class User implements UserDetails {
     public void setId(String id) {
         this.id = id;
     }
-
-
 
     public String getUsername() {
         return username;

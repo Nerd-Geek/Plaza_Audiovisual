@@ -1,5 +1,5 @@
 # Para iniciar docker-compose up -d
-version: '3.7'
+version: '3.5'
 
 services:
   mariadb:
@@ -14,7 +14,7 @@ services:
       - mariadb-volume:/var/lib/mysql
     networks:
       - mariadb-network
-    # restart: always
+    restart: always
 
 volumes:
   mariadb-volume:
@@ -22,23 +22,3 @@ volumes:
 networks:
   mariadb-network:
     driver: bridge
-
-#Postgres Example
-#services:
-  #postgres:
-    #build: ./postgres
-    #image: postgres
-    #container_name: postgres_container
-    #volumes:
-      #- postgres-volume:/var/lib/postgresql/data
-    #ports:
-      #- "5432:5432"
-    #networks:
-      #- postgres-network
-
-    #volumes:
-      #postgres-volume:
-
-    #networks:
-      #postgres-network:
-        #driver: bridge
