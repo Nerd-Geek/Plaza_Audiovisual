@@ -46,7 +46,7 @@ public class MediaRepositoryMockTest {
 
     private final Media media = Media.builder()
             .id("7dafe5fd-976b-450a-9bab-17ab450a4fff")
-            .size(4.4)
+            .size(4L)
             .type(".png")
             .name("Nombre")
             .description("descripcion")

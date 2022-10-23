@@ -11,6 +11,7 @@ import org.example.exceptions.media.MediaNotFountException;
 import org.example.mapper.MediaMapper;
 import org.example.mapper.UserMapper;
 import org.example.model.Media;
+import org.example.model.User;
 import org.example.repositories.MediaRepository;
 import org.example.repositories.UserRepository;
 import org.example.service.uploads.StorageService;
@@ -169,18 +170,26 @@ public class MediaController {
     })
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> newMedia(
-            @RequestPart("media") MediaDTO serviceDTO,
-            @RequestPart("file") MultipartFile file) {
-
-        Media service = mediaMapper.fromDTO(serviceDTO);
+            @RequestPart("description") String description,
+            @RequestPart("file") MultipartFile file,
+            @RequestPart("user") User user) {
+        MediaDTO mediaDTO = new MediaDTO();
+        Media media = mediaMapper.fromDTO(mediaDTO);
 
         if (!file.isEmpty()) {
             String imagen = storageService.store(file);
             String urlImagen = storageService.getUrl(imagen);
-            service.setName(urlImagen);
+            media.setSize(file.getSize());
+            System.out.println(urlImagen);
+            String[] type = urlImagen.split("\\.");
+            media.setType(type[4]);
+            media.setName(urlImagen);
+            media.setDescription(description);
+            media.setDimension(0);
+            media.setUser(user);
         }
         try {
-            Media serviceInsertado = mediaRepository.save(service);
+            Media serviceInsertado = mediaRepository.save(media);
             return ResponseEntity.ok(mediaMapper.toDTO(serviceInsertado));
         } catch (MediaNotFoundException ex) {
             throw new GeneralBadRequestException("Insertar", "Error al insertar el producto. Campos incorrectos");

@@ -202,6 +202,7 @@ public class UserController {
                 .description(user.getDescription())
                 .roles(user.getRoles().stream().map(UserRol::name).collect(Collectors.toSet()))
                 .token(jwtToken)
+                .expirateToken(86400000)
                 .build();
     }
 }

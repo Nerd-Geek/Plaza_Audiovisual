@@ -30,6 +30,8 @@ public class JwtTokenProvider {
     public String generateToken(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Date tokenExpirationDate = new Date(System.currentTimeMillis() + (jwtDuracionTokenEnSegundos * 1000));
+        System.out.println(tokenExpirationDate);
+        System.out.println(jwtDuracionTokenEnSegundos);
 
         return Jwts.builder()
                 .signWith(Keys.hmacShaKeyFor(jwtSecreto.getBytes()), SignatureAlgorithm.HS512)
