@@ -1,22 +1,26 @@
+import 'package:get/get.dart';
+import 'package:plaza_audiovisual_interfaz/model/user_rol.dart';
+
 import 'media.dart';
 
 class User {
 
-  String? id;
-  String? userName;
-  String? name;
-  String? lastName;
-  String? email;
-  String? phoneNumber;
-  String? pasword;
-  String? passwordConfirm;
-  String? image;
-  String? description;
-  Set<Media>? medias;
+  RxString? id = "".obs;
+  RxString? username = "".obs;
+  RxString? name = "".obs;
+  RxString? lastName = "".obs;
+  RxString? email = "".obs;
+  RxString? phoneNumber = "".obs;
+  RxString? pasword = "".obs;
+  RxString? passwordConfirm = "".obs;
+  RxString? image = "".obs;
+  RxString? description = "".obs;
+  RxList<UserRol>? roles = <UserRol>[].obs;
+  RxList<Media>? medias = <Media>[].obs;
 
   User({
     this.id,
-    this.userName,
+    this.username,
     this.name,
     this.lastName,
     this.email,
@@ -29,17 +33,20 @@ class User {
   });
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userName = json['username'];
-    name = json['name'].obs;
-    lastName = json['lastName'].obs;
-    email = json['email'].obs;
-    phoneNumber = json['phoneNumber'].obs;
-    pasword = json['pasword'].obs;
-    passwordConfirm = json['passwordConfirm'].obs;
-    image = json['image'].obs;
-    description = json['description'].obs;
-    medias = json['medias'].obs;
+    id!.value = json['id'];
+    username!.value = json['username'];
+    name!.value = json['name'];
+    lastName!.value = json['lastName'];
+    email!.value = json['email'];
+    phoneNumber!.value = json['phoneNumber'];
+    image!.value = json['image'];
+    description!.value = json['description'];
+    if (json['medias'] != null || (json['medias'] as List).isNotEmpty) {
+      medias!.value = <Media>[];
+      json['medias'].forEach((v) {
+        medias!.add(Media.fromJson(v));
+      });
+    }
 
   }
 
@@ -49,6 +56,14 @@ class User {
     data['name'] = name;
 
     return data;
+  }
+
+  parseResult(List<dynamic> data) {
+    List<User> results = <User>[];
+    data.forEach((item) {
+      results.add(User.fromJson(item));
+    });
+    return results;
   }
 
   

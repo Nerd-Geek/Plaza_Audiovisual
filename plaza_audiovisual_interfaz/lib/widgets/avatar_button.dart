@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 
 class AvatarButton extends StatelessWidget {
   final double imageSize;
+  final String path;
 
-  AvatarButton({this.imageSize = 100});
+  AvatarButton({
+    this.imageSize = 100,
+    this.path = "https://www.w3schools.com/howto/img_avatar2.png"
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class AvatarButton extends StatelessWidget {
           ),
           child: ClipOval(
             child: Image.network(
-              "https://www.w3schools.com/howto/img_avatar2.png",
+              path,
               width: imageSize,
               height: imageSize,
             ),

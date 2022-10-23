@@ -1,3 +1,4 @@
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:plaza_audiovisual_interfaz/utils/responsive.dart';
 import 'package:plaza_audiovisual_interfaz/widgets/input_text.dart';
 import 'package:flutter/material.dart';
@@ -35,11 +36,11 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             children: [
             InputText(
-            keyBoardType: TextInputType.emailAddress,
+            keyBoardType: TextInputType.text,
               label: "USER NAME",
               fontSize: responsive.dp(1.6),
               onChanged: (text){
-                user.userName = text;
+                user.username = text.obs;
               },
               validator: (text) {
                 if (text!.isEmpty) {
@@ -67,7 +68,8 @@ class _LoginFormState extends State<LoginForm> {
                     borderEnable: false,
                     fontSize: responsive.dp(1.6),
                     onChanged: (text){
-                      user.pasword = text;
+                      user.pasword = text.obs;
+                      print(user.pasword);
                     },
                     validator: (text) {
                       if (text == null || text.isEmpty) {

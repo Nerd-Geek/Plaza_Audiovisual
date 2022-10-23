@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:plaza_audiovisual_interfaz/utils/responsive.dart';
 
 class Dialogs {
   static info(BuildContext context, {String? title, String? content}) {
@@ -28,13 +29,19 @@ class ProgressDialog {
   ProgressDialog (this.context);
 
   void show() {
+    final Responsive responsive = Responsive.of(context);
     showCupertinoModalPopup(
         context: context,
         builder: (_) => Container(
           width: double.infinity,
           height: double.infinity,
-          child: const Center(
-            child: CircularProgressIndicator(),
+          child: Center(
+            //child: CircularProgressIndicator(),
+            child: Image.asset(
+              "assets/gif/loading_gif.gif",
+              height: responsive.hp(90),
+              width: responsive.wp(90),
+            ),
           ),
         ),
     );
