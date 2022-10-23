@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:plaza_audiovisual_interfaz/api/my_api.dart';
 import 'package:plaza_audiovisual_interfaz/model/user.dart';
 import 'package:plaza_audiovisual_interfaz/utils/dialogs.dart';
@@ -43,7 +44,7 @@ class _RegisterForm extends State<RegisterForm> {
                     label: "USERNAME",
                     fontSize: responsive.dp(1.6),
                     onChanged: (text){
-                      user.userName = text;
+                      user.username = text.obs;
                     },
                     validator: (text) {
                       if (text!.isEmpty){
@@ -56,7 +57,7 @@ class _RegisterForm extends State<RegisterForm> {
                     label: "NAME",
                     fontSize: responsive.dp(1.6),
                     onChanged: (text){
-                      user.name = text;
+                      user.name!.value = text;
                     },
                     validator: (text) {
                       if (text!.isEmpty){
@@ -69,7 +70,7 @@ class _RegisterForm extends State<RegisterForm> {
                     label: "LASTNAME",
                     fontSize: responsive.dp(1.6),
                     onChanged: (text){
-                      user.lastName = text;
+                      user.lastName = text.obs;
                     },
                     validator: (text) {
                       if (text!.isEmpty){
@@ -84,7 +85,7 @@ class _RegisterForm extends State<RegisterForm> {
                     label: "EMAIL ADRESS",
                     fontSize: responsive.dp(1.6),
                     onChanged: (text){
-                      user.email = text;
+                      user.email = text.obs;
                     },
                     validator: (text) {
                       if (!text!.contains("@")){
@@ -101,7 +102,7 @@ class _RegisterForm extends State<RegisterForm> {
                     label: "PHONE NUMBER",
                     fontSize: responsive.dp(1.6),
                     onChanged: (text){
-                      user.phoneNumber = text;
+                      user.phoneNumber = text.obs;
                     },
                     validator: (text) {
                       if (text!.isEmpty){
@@ -121,7 +122,7 @@ class _RegisterForm extends State<RegisterForm> {
                     fontSize: responsive.dp(1.6),
                     obscureText: true,
                     onChanged: (text){
-                      user.pasword = text;
+                      user.pasword = text.obs;
                     },
                     validator: (text) {
                       if (text!.isEmpty){
@@ -137,7 +138,7 @@ class _RegisterForm extends State<RegisterForm> {
                     fontSize: responsive.dp(1.6),
                     obscureText: true,
                     onChanged: (text){
-                      user.passwordConfirm = text;
+                      user.passwordConfirm = text.obs;
                     },
                     validator: (text) {
                       if (text! != user.pasword){
@@ -153,7 +154,7 @@ class _RegisterForm extends State<RegisterForm> {
                     label: "DESCRIPTION",
                     fontSize: responsive.dp(1.6),
                     onChanged: (text){
-                    user.description = text;
+                    user.description = text.obs;
                     },
                     validator: (text) {
                       if (text!.isEmpty) {
@@ -166,7 +167,6 @@ class _RegisterForm extends State<RegisterForm> {
                 ],
               ),
             ),
-            SizedBox(height: responsive.dp(5)),
             SizedBox(
               width: double.infinity,
               child: OutlinedButton (
