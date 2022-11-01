@@ -1,5 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:plaza_audiovisual_interfaz/utils/data_state.dart';
+import 'package:plaza_audiovisual_interfaz/utils/extras.dart';
+import 'package:plaza_audiovisual_interfaz/widgets/avatar_button.dart';
 import 'package:plaza_audiovisual_interfaz/widgets/list_user.dart';
 import 'package:provider/provider.dart';
 
@@ -15,13 +20,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+
+
+
   @override
   Widget build(BuildContext context) {
     final Responsive responsive = Responsive.of(context);
     return Scaffold(
       body: Column(
         children: [
-          LogoutButton(),
+          const LogoutButton(),
           ChangeNotifierProvider(
             create: (BuildContext context) => DataState(),
             child: ListUser(),

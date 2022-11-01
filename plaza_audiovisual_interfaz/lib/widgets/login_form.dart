@@ -69,7 +69,6 @@ class _LoginFormState extends State<LoginForm> {
                     fontSize: responsive.dp(1.6),
                     onChanged: (text){
                       user.pasword = text.obs;
-                      print(user.pasword);
                     },
                     validator: (text) {
                       if (text == null || text.isEmpty) {
@@ -78,19 +77,6 @@ class _LoginFormState extends State<LoginForm> {
                       return null;
                     },
                   ),
-                ),
-                TextButton(
-                    onPressed: () {  },
-                    style: const ButtonStyle(
-                      foregroundColor: MaterialStatePropertyAll<Color>(Colors.black),
-                    ),
-                    child: Text(
-                      "Forgot Password",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: responsive.dp(1.6)
-                      ),
-                    )
                 ),
               ],
             ),

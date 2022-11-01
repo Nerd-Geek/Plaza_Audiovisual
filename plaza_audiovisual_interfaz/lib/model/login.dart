@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:plaza_audiovisual_interfaz/model/user.dart';
 
 import 'media.dart';
@@ -5,53 +6,29 @@ import 'media.dart';
 class Login {
 
   String? id;
-  String? userName;
-  String? name;
-  String? lastName;
-  String? email;
-  String? phoneNumber;
-  String? image;
-  String? description;
-  Set<String>? roles;
-  Set<Media>? medias;
+  Rx<User> user = User().obs;
+  String? password;
   String? token;
-  int? expirateToken;
+  int? instance;
 
   Login({
     this.id,
-    this.userName,
-    this.name,
-    this.lastName,
-    this.email,
-    this.phoneNumber,
-    this.image,
-    this.description,
-    this.roles,
-    this.medias,
+    required this.user,
     this.token,
-    this.expirateToken,
+    this.instance,
   });
 
   Login.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    userName = json['userName'];
-    name = json['name'].obs;
-    lastName = json['lastName'].obs;
-    email = json['email'].obs;
-    phoneNumber = json['phoneNumber'].obs;
-    image = json['image'].obs;
-    description = json['description'].obs;
-    medias = json['roles'].obs;
-    medias = json['medias'].obs;
-    medias = json['token'].obs;
-    medias = json['expirateToken'].obs;
+    token = json['token'];
+    instance = json['instance'];
+    user.value = json['user'];
 
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['name'] = name;
 
     return data;
   }

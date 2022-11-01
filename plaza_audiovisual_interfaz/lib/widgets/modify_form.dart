@@ -1,30 +1,28 @@
 import 'package:get/get.dart';
 import 'package:plaza_audiovisual_interfaz/api/my_api.dart';
 import 'package:plaza_audiovisual_interfaz/model/user.dart';
-import 'package:plaza_audiovisual_interfaz/utils/extras.dart';
 import 'package:plaza_audiovisual_interfaz/utils/responsive.dart';
 import 'package:plaza_audiovisual_interfaz/widgets/input_text.dart';
 import 'package:flutter/material.dart';
 
-class RegisterForm extends StatefulWidget {
-
+class ModifyForm extends StatefulWidget {
   @override
-  _RegisterForm createState() => _RegisterForm();
+  _ModifyForm createState() => _ModifyForm();
 }
 
-class _RegisterForm extends State<RegisterForm> {
+class _ModifyForm extends State<ModifyForm> {
 
   final GlobalKey<FormState> _formKey = GlobalKey();
   User user = User();
-
   _submit() async {
     final isOk = _formKey.currentState?.validate();
     MyApi myApi = MyApi.instance;
-    await myApi.register(user: user, context: context);
+    await myApi.updateUser(user: user, context: context);
   }
 
   @override
   Widget build(BuildContext context) {
+
     final Responsive responsive = Responsive.of(context);
 
     return Positioned(
@@ -37,7 +35,7 @@ class _RegisterForm extends State<RegisterForm> {
         child: Column(
           children: [
             SizedBox(
-              height: responsive.dp(36),
+              height: responsive.dp(45),
               child: ListView(
                 children: [
                   InputText(
@@ -151,18 +149,18 @@ class _RegisterForm extends State<RegisterForm> {
 
                   SizedBox(height: responsive.dp(2)),
                   InputText(
-                    keyBoardType: TextInputType.text,
-                    label: "DESCRIPTION",
-                    fontSize: responsive.dp(1.6),
-                    onChanged: (text){
-                    user.description = text.obs;
-                    },
-                    validator: (text) {
-                      if (text!.isEmpty) {
-                        return "Invalid description";
+                      keyBoardType: TextInputType.text,
+                      label: "DESCRIPTION",
+                      fontSize: responsive.dp(1.6),
+                      onChanged: (text){
+                        user.description = text.obs;
+                      },
+                      validator: (text) {
+                        if (text!.isEmpty) {
+                          return "Invalid description";
+                        }
+                        return null;
                       }
-                      return null;
-                    }
                   ),
                   SizedBox(height: responsive.dp(5)),
                 ],
@@ -179,7 +177,7 @@ class _RegisterForm extends State<RegisterForm> {
                       const EdgeInsets.symmetric(vertical: 10)),
                 ),
                 child: Text(
-                  "Sign Up",
+                  "Modify user",
                   style: TextStyle(
                       fontSize: responsive.dp(1.6)
                   ),

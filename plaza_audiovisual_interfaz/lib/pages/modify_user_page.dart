@@ -1,20 +1,62 @@
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:plaza_audiovisual_interfaz/utils/responsive.dart';
+import 'package:plaza_audiovisual_interfaz/widgets/avatar_button.dart';
 import 'package:plaza_audiovisual_interfaz/widgets/icon_container.dart';
+import 'package:plaza_audiovisual_interfaz/widgets/register_form.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../api/my_api.dart';
+import '../model/user.dart';
+import '../utils/extras.dart';
+import '../widgets/modify_form.dart';
 import '../widgets/rectangle.dart';
-import '../widgets/login_form.dart';
 
 
 
-class LoginPage extends StatefulWidget {
-  static const routeName = 'login';
+class ModifyUserPage extends StatefulWidget {
+  static const routeName = 'modify';
   @override
-  _LoginPage createState() => _LoginPage();
+  _ModifyUserPage createState() => _ModifyUserPage();
 
 
 }
-class _LoginPage extends State<LoginPage> {
+class _ModifyUserPage extends State<ModifyUserPage> {
+  User user = User();
+  @override
+  void initState() {
+    super.initState();
+    _submit();
+  }
+  _submit() async {
+    MyApi myApi = MyApi.instance;
+    String username = await myApi.getUsername()??"";
+
+    await myApi.getUserInfo(username: username).then((value) {
+      setState(() {
+        user.username = value?.username;
+        user.image = value?.image;
+        user.medias = value?.medias;
+      });
+    })??"";
+  }
+
+  _pickImage() async {
+    final XFile? pickedFile = await Extras.pickImage(false);
+    final bytes = await pickedFile?.readAsBytes();
+    if(pickedFile != null) {
+     final String result = await MyApi.instance.setImageAvatar(bytes!, pickedFile.path);
+
+     if(result != null) {
+       user.image = result.obs;
+       setState(() {
+
+       });
+     }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Responsive responsive = Responsive.of(context);
@@ -56,7 +98,7 @@ class _LoginPage extends State<LoginPage> {
                     ],
                   ),
                 ),
-                
+
                 Positioned(
                   left: -orangeSize * 0.15,
                   top: -orangeSize * 0.55,
@@ -68,7 +110,7 @@ class _LoginPage extends State<LoginPage> {
                     ],
                   ),
                 ),
-              
+
                 Positioned(
                   right:-pinkSize * 0.2,
                   top: -pinkSize * 0.8,
@@ -81,26 +123,36 @@ class _LoginPage extends State<LoginPage> {
                   ),
                 ),
                 Positioned(
-                  top: responsive.wp(70) * 0.35,
+                  top: pinkSize * 0.22,
                   child: Column(
                     children: [
-                      IconContainer(
-                        size:
-                        responsive.wp(23),
-                      ),
-                      SizedBox(
-                      ),
-                      Text(
-                        "Hello Again\nWelcome Back",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: responsive.dp(1.6),
-                        ),
+
+                      SizedBox(height: responsive.dp(1)),
+                      AvatarButton(
+                        onPressed: _pickImage,
+                        path: user.image?.value,
+                        imageSize: responsive.wp(25),
                       )
                     ],
                   ),
                 ),
-                LoginForm()
+
+                ModifyForm(),
+                Positioned(
+                  left: 15,
+                  top: 15,
+                  child: SafeArea(
+                      child: CupertinoButton(
+                        color: Colors.black26,
+                        padding: EdgeInsets.all(10),
+                        borderRadius: BorderRadius.circular(30),
+                        onPressed: () {
+                          Navigator.pushNamed(context, 'navBar');
+                        },
+                        child: const Icon(Icons.arrow_back),
+                      )
+                  ),
+                ),
               ],
             ),
           ),

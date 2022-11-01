@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:plaza_audiovisual_interfaz/utils/responsive.dart';
 import 'package:plaza_audiovisual_interfaz/widgets/avatar_button.dart';
 import 'package:plaza_audiovisual_interfaz/widgets/icon_container.dart';
@@ -5,6 +6,8 @@ import 'package:plaza_audiovisual_interfaz/widgets/register_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/extras.dart';
+import '../widgets/avatar.dart';
 import '../widgets/rectangle.dart';
 
 
@@ -17,6 +20,8 @@ class RegisterPage extends StatefulWidget {
 
 }
 class _RegisterPage extends State<RegisterPage> {
+
+
   @override
   Widget build(BuildContext context) {
     final Responsive responsive = Responsive.of(context);
@@ -97,8 +102,9 @@ class _RegisterPage extends State<RegisterPage> {
                       ),
 
                       SizedBox(height: responsive.dp(1)),
-                      AvatarButton(
-                        imageSize: responsive.wp(25),
+                      const Avatar(
+                        path: "https://www.w3schools.com/howto/img_avatar2.png",
+                        imageSize: 100,
                       )
                     ],
                   ),
@@ -116,7 +122,7 @@ class _RegisterPage extends State<RegisterPage> {
                           onPressed: () {
                             Navigator.pushNamed(context, 'login');
                           },
-                          child: Icon(Icons.arrow_back),
+                          child: const Icon(Icons.arrow_back),
                         )
                     ),
                 ),

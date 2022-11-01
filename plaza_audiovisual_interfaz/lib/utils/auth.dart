@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
 import 'package:plaza_audiovisual_interfaz/pages/login_page.dart';
 
 
@@ -12,7 +13,7 @@ class Auth {
   static Auth _instance = Auth._internal();
   static Auth get instance => _instance;
 
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   final key = "SESSION";
 
   Future<String?> accessToken(BuildContext context) async {
@@ -33,10 +34,18 @@ class Auth {
     return null;
   }
 
+  Future<String?> getToken() async {
+    final Session? session = await getSession();
+    if(session != null){
+      String token = session.token.obs.value.toString();
+      return token;
+    }
+    return null;
+  }
+
   Future<void> setSession(Session session) async {
     final String value = jsonEncode(session.toJson());
     await storage.write(key: key, value: value);
-    print("session saved");
   }
 
   Future<Session?> getSession() async{
@@ -82,9 +91,9 @@ class Session {
 
   Map<String, dynamic> toJson() {
     return {
-      "token":this.token,
-      "expirate":this.expirate,
-      "createdAt":this.createdAt.toString(),
+      "token":token,
+      "expirate":expirate,
+      "createdAt":createdAt.toString(),
     };
   }
 }

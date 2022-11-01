@@ -16,6 +16,7 @@ class LogoutButton extends StatelessWidget {
             top:  responsive.wp(10)
           ),
           child: TextButton(
+
             onPressed: () => Auth.instance.logOut(context),
             style: const ButtonStyle(
             foregroundColor: MaterialStatePropertyAll<Color>(Colors.green),

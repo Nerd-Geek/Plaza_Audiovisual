@@ -24,7 +24,6 @@ class _SplashPageState extends State<SplashPage> with AfterLayoutMixin{
 
   _check() async {
     final String? token = await Auth.instance.accessToken(context);
-    print("was logged");
     if(token != null) {
       Navigator.pushReplacementNamed(context, NavBar.routeName);
     } else {

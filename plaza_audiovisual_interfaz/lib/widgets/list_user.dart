@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:plaza_audiovisual_interfaz/utils/data_state.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,9 @@ class _ListUser extends State<ListUser> {
     await myApi.getMediasUser().then((value) {
       setState(() {
         for(int i = 0; i < value!.length; i++) {
-          user.add(value[i]);
+          if(value[i].medias!.isNotEmpty) {
+            user.add(value[i]);
+          }
         }
       });
     });
@@ -36,7 +39,7 @@ class _ListUser extends State<ListUser> {
   Widget build(BuildContext context) {
 
     final Responsive responsive = Responsive.of(context);
-    return Container(
+    return SizedBox(
       height: responsive.hp(70),
       child: ListView.builder(
         itemCount: user.length,
@@ -45,6 +48,8 @@ class _ListUser extends State<ListUser> {
               user[index].name!.value,
               user[index].medias![0].description!.value,
               user[index].medias![0].name!.value,
+              user[index].image!.value,
+              "heroe $index"
           );
         },
         padding: const EdgeInsets.all(25.0),

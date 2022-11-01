@@ -8,7 +8,9 @@ class CardUser extends StatelessWidget{
   final String nombreUser;
   final String detail;
   final String pathImage;
-  const CardUser(this.nombreUser, this.detail,this.pathImage, {super.key});
+  final String path;
+  final String heroe;
+  const CardUser(this.nombreUser, this.detail,this.pathImage, this.path, this.heroe, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class CardUser extends StatelessWidget{
     );
     final cardDetail =  Container(
       width: double.maxFinite,
-      margin: EdgeInsets.only(top: responsive.hp(40), bottom: responsive.hp(8)),
+      margin: EdgeInsets.only(top: responsive.hp(33), bottom: responsive.hp(8)),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9),
@@ -55,6 +57,8 @@ class CardUser extends StatelessWidget{
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+
+                    IconContainer(path: path, size: responsive.dp(10)),
                     Text(
                       nombreUser,
                       style: const TextStyle(
@@ -85,11 +89,12 @@ class CardUser extends StatelessWidget{
       child: Stack(
         children: <Widget>[
           cardImage,
-          const FloatingActionButton(
+          FloatingActionButton(
               onPressed: null,
               mini: true,
               backgroundColor: Color.fromRGBO(102, 216, 105, 1),
-              child: Icon(Icons.favorite)
+              heroTag: heroe,
+              child: Icon(Icons.favorite),
           ),
           cardDetail,
         ],

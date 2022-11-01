@@ -1,10 +1,13 @@
 import 'package:plaza_audiovisual_interfaz/pages/home_page.dart';
 import 'package:plaza_audiovisual_interfaz/pages/login_page.dart';
+import 'package:plaza_audiovisual_interfaz/pages/modify_user_page.dart';
 import 'package:plaza_audiovisual_interfaz/pages/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:plaza_audiovisual_interfaz/pages/splash_page.dart';
 import 'package:plaza_audiovisual_interfaz/pages/nav_bar.dart';
+import 'package:plaza_audiovisual_interfaz/widgets/user_profile.dart';
+import 'package:plaza_audiovisual_interfaz/widgets/user_profile_form.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,6 +34,7 @@ class MyApp extends StatelessWidget {
       home: SplashPage(),
       routes: {
         RegisterPage.routeName:(_) => RegisterPage(),
+        ModifyUserPage.routeName:(_) => ModifyUserPage(),
         LoginPage.routeName:(_) => LoginPage(),
         HomePage.routeName:(_) => HomePage(),
         NavBar.routeName:(_) => const NavBar(),

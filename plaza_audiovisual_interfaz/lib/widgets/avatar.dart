@@ -1,15 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AvatarButton extends StatelessWidget {
+class Avatar extends StatelessWidget {
   final double? imageSize;
   final String? path;
-  final VoidCallback? onPressed;
 
-  const AvatarButton({
+  const Avatar({
     this.imageSize = 100,
     required this.path,
-    this.onPressed,
   });
 
   @override
@@ -37,31 +35,6 @@ class AvatarButton extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
-            bottom: 5,
-            right: 0,
-            child: CupertinoButton(
-                padding: EdgeInsets.zero,
-                borderRadius: BorderRadius.circular(30),
-                onPressed: onPressed,
-                child: Container(
-                  child: Icon(
-                      Icons.add,
-                      color : Colors.white,
-                  ),
-                  padding: const EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 2,
-                      ),
-                      color: Colors.pinkAccent,
-                      shape: BoxShape.circle
-                  ),
-                )
-            )
-        ),
-
       ],
     );
   }
