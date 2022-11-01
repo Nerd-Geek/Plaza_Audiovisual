@@ -18,7 +18,7 @@ public class CustomersUserDetailsService implements UserDetailsService {
     }
 
     public UserDetails loadUserById(String userId) {
-        return userService.findUserById(userId)
+        return userService.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario con id: " + userId + " no encontrado"));
     }
 }

@@ -8,18 +8,23 @@ import org.example.config.APIConfig;
 import org.example.config.security.jwt.JwtTokenProvider;
 import org.example.config.security.model.JwtUserResponse;
 import org.example.config.security.model.LoginRequest;
+import org.example.dto.login.LoginDTO;
 import org.example.dto.user.CreateUserDTO;
 import org.example.dto.user.UserDTO;
 import org.example.exceptions.GeneralBadRequestException;
 import org.example.exceptions.ServiceNotFoundException;
+import org.example.exceptions.login.LoginNotFoundException;
+import org.example.exceptions.storage.StorageException;
 import org.example.exceptions.user.*;
 import org.example.mapper.UserMapper;
 import org.example.model.Login;
 import org.example.model.User;
 import org.example.model.UserRol;
 import org.example.repositories.LoginRepository;
+import org.example.repositories.UserRepository;
 import org.example.service.uploads.StorageService;
 import org.example.service.users.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,9 +36,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -44,6 +52,7 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
     private final LoginRepository loginRepository;
+    private final UserRepository userRepository;
 
     private final StorageService storageService;
     private final AuthenticationManager authenticationManager;
@@ -77,7 +86,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "Not Found", response = UsersNotFoundException.class)
     })
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable String id) {
+    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
         User user = userService.findById(id).orElse(null);
         if (user == null) {
             throw new UserNotFoundByIdException(id);
@@ -92,7 +101,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "Not Found", response = UsersNotFoundException.class)
     })
     @GetMapping("/name/{username}")
-    public ResponseEntity<?> findByUsername(@PathVariable String username) {
+    public ResponseEntity<UserDTO> findByUsername(@PathVariable String username) {
         User user = userService.findByUsernameIgnoreCase(username).orElse(null);
         if (user == null) {
             throw new UserNotFoundByUsernameException(username);
@@ -157,10 +166,16 @@ public class UserController {
             @ApiResponse(code = 400, message = "Bad Request", response = GeneralBadRequestException.class)
     })
     @PostMapping("/")
-    public UserDTO nuevoUsuario(@RequestBody CreateUserDTO newUser) {
-        if (userService.findByUsernameIgnoreCase(newUser.getUserername()).isPresent()) {
+    public UserDTO nuevoUsuario(@RequestBody CreateUserDTO newUser) throws MalformedURLException {
+        if (userService.findByUsernameIgnoreCase(newUser.getUsername()).isPresent()) {
             throw new UserNameDuplicatedException();
         } else {
+            User user = userMapper.fromDTOCreate(newUser);
+
+            URL firstURL = new URL("http://192.168.29.141:6668/rest/files/1666536760224_avatar2.png");
+            String imagen = firstURL.toString();
+            user.setImage(imagen);
+            newUser.setImage(user.getImage());
             return userMapper.toDTO(userService.save(newUser));
         }
     }
@@ -175,7 +190,6 @@ public class UserController {
             @RequestPart("file") MultipartFile file, @RequestPart("user") CreateUserDTO createUserDTO) {
 
         User user = userMapper.fromDTOCreate(createUserDTO);
-
         if (!file.isEmpty()) {
             String imagen = storageService.store(file);
             String urlImagen = storageService.getUrl(imagen);
@@ -189,6 +203,41 @@ public class UserController {
             throw new GeneralBadRequestException("Insertar", "Error al insertar el producto. Campos incorrectos");
         }
     }
+
+    @ApiOperation(value = "Actualizar usuario", notes = "Actualiza el usuario logueado")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = CreateUserDTO.class),
+            @ApiResponse(code = 404, message = "Not Found", response = GeneralBadRequestException.class)
+    })
+    @PutMapping("/me")
+    public ResponseEntity<UserDTO> mePut(@AuthenticationPrincipal User user, @RequestBody CreateUserDTO userModifyDTO) {
+        System.out.println(userModifyDTO);
+        User created = userService.updateUser(userModifyDTO, user);
+        return ResponseEntity.ok(userMapper.toDTO(created));
+    }
+
+    @PostMapping("/avatar")
+    public ResponseEntity<?> updateAvatar(@AuthenticationPrincipal User user, @RequestPart("file") MultipartFile file) {
+        String urlImage = null;
+        if (!file.isEmpty()) {
+            String imagen = storageService.store(file);
+            String urlImagen = storageService.getUrl(imagen);
+            user.setImage(urlImagen);
+        }
+        try {
+            String image = storageService.store(file);
+            userRepository.save(user);
+            urlImage = storageService.getUrl(image);
+            String response =  urlImage;
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        }
+        catch(StorageException e)
+        {
+            throw new StorageException("No se puede subir un fichero vacío");
+        }
+    }
+
+
     private JwtUserResponse convertUserEntityAndTokenToJwtUserResponse(User user, String jwtToken) {
         return JwtUserResponse
                 .jwtUserResponseBuilder()

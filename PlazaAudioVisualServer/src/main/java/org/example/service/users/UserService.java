@@ -40,17 +40,13 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public Optional<User> findUserById(String userId) {
-        return userRepository.findById(userId);
-    }
-
     public User save(CreateUserDTO newUser) {
         if (newUser.getPassword().equals(newUser.getPasswordConfirm())) {
             Set<UserRol> defaultRoles = new HashSet<>();
             defaultRoles.add(UserRol.NORMAL);
             User user = User.builder()
                     .id(UUID.randomUUID().toString())
-                    .username(newUser.getUserername())
+                    .username(newUser.getUsername())
                     .name(newUser.getName())
                     .lastname(newUser.getLastName())
                     .email(newUser.getEmail())
@@ -68,5 +64,52 @@ public class UserService {
         } else {
             throw new NewUserWithDifferentPasswordsException();
         }
+    }
+
+    public User updateUser(CreateUserDTO userModifyDTO, User user) {
+        String username = userModifyDTO.getUsername();
+        String name = userModifyDTO.getName();
+        String lastname = userModifyDTO.getLastName();
+        String email = userModifyDTO.getEmail();
+        String phonenumber = userModifyDTO.getPhoneNumber();
+        String image = userModifyDTO.getImage();
+        String password = userModifyDTO.getPassword();
+        String passwordConfirm = userModifyDTO.getPasswordConfirm();
+        String description = userModifyDTO.getDescription();
+
+        if (username != null) {
+            user.setUsername(username);
+        }
+
+        if (name != null) {
+            user.setName(name);
+        }
+
+        if (lastname != null) {
+            user.setLastname(lastname);
+        }
+
+        if (phonenumber != null) {
+            user.setPhoneNumber(phonenumber);
+        }
+
+        if (image != null) {
+            user.setImage(image);
+        }
+
+        if (description != null) {
+            user.setDescription(description);
+        }
+
+        if (password != null && passwordConfirm != null) {
+            if (password.equals(passwordConfirm)) {
+                user.setPassword(passwordEncoder.encode(password));
+            }
+        }
+        if (email != null) {
+            user.setEmail(email);
+        }
+
+        return userRepository.save(user);
     }
 }

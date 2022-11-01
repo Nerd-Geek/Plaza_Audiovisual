@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.example.config.APIConfig;
 import org.example.dto.login.ListLoginPageDTO;
 import org.example.dto.login.LoginDTO;
@@ -14,6 +15,7 @@ import org.example.exceptions.login.LoginsNotFoundException;
 import org.example.mapper.LoginMapper;
 import org.example.model.Login;
 import org.example.repositories.LoginRepository;
+import org.example.service.logins.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,15 +27,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(APIConfig.API_PATH + "/logins")
+@RequiredArgsConstructor
 public class LoginController {
     private final LoginRepository loginRepository;
+    private final LoginService loginService;
     private final LoginMapper loginMapper;
-
-    @Autowired
-    public LoginController(LoginRepository loginRepository, LoginMapper loginMapper) {
-        this.loginRepository = loginRepository;
-        this.loginMapper = loginMapper;
-    }
 
     @ApiOperation(value = "Obtener todos los logins", notes = "Obtiene todos los logins")
     @ApiResponses(value = {
@@ -99,9 +97,9 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/{token}")
+    @GetMapping("/token/{token}")
     public ResponseEntity<LoginDTO> findByToken(@PathVariable String token) {
-        Login login = loginRepository.findByToken(token).orElse(null);
+        Login login = loginService.findByToken(token).orElse(null);
         if (login == null) {
             throw new LoginsNotFoundException();
         } else {
