@@ -49,7 +49,7 @@ public class UserRepositoryIntegrationTest {
 
     private static final Media media = Media.builder()
             .id("ec272c62-9d31-11ec-b909-0242ac120003")
-            .size(4.4)
+            .size(4L)
             .type(".png")
             .name("Nombre")
             .description("descripcion")

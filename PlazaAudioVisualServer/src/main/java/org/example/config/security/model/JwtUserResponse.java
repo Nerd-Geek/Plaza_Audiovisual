@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.config.security.jwt.JwtTokenProvider;
 import org.example.dto.user.UserDTO;
 import org.example.model.Media;
 
@@ -16,12 +17,13 @@ import java.util.Set;
 public class JwtUserResponse extends UserDTO {
     @NotNull(message = "El token no puede ser nulo")
     private String token;
-
+    private int expirateToken;
     @Builder(builderMethodName = "jwtUserResponseBuilder")
     public JwtUserResponse(String id, String username, String name, String lastName, String email,
                            String phoneNumber, String image, String description, Set<String> roles, Set<Media> medias,
-                           String token) {
+                           String token, int expirateToken) {
         super(id, username, name, lastName, email, phoneNumber, image, description, roles, medias);
         this.token = token;
+        this.expirateToken = expirateToken;
     }
 }

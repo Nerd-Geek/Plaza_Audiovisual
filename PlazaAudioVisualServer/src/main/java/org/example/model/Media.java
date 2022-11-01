@@ -21,7 +21,7 @@ import java.util.UUID;
 @ToString
 public class Media {
     private String id;
-    private Double size;
+    private Long size;
     private String type;
     private String name;
     private String description;
@@ -29,7 +29,7 @@ public class Media {
     @ToString.Exclude
     private User user;
 
-    public Media(Double size, String type, String name, String description, int dimension) {
+    public Media(Long size, String type, String name, String description, int dimension) {
         this.id = UUID.randomUUID().toString();
         this.size = size;
         this.type = type;
@@ -47,11 +47,11 @@ public class Media {
         this.id = id;
     }
 
-    public Double getSize() {
+    public Long getSize() {
         return size;
     }
 
-    public void setSize(Double size) {
+    public void setSize(Long size) {
         this.size = size;
     }
 

@@ -43,7 +43,7 @@ public class MediaRestControllerIntegrationMVCTest {
 
     private final Media media = Media.builder()
             .id("c55813de-cdba-42c6-9554-579e4368d940")
-            .size(2.5)
+            .size(2L)
             .type("png")
             .name("adas")
             .description("as")

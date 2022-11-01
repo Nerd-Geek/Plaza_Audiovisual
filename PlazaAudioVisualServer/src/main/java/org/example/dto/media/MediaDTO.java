@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class MediaDTO {
     private String id = UUID.randomUUID().toString();
-    private Double size;
+    private Long size;
     private String type;
     private String name;
     private String description;
