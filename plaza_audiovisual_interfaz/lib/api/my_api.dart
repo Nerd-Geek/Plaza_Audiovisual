@@ -45,7 +45,6 @@ class MyApi {
             "description": user.description!.value
           },
       );
-      //await Auth.instance.setSession(response.data);
       progressDialog.dissmiss();
       Navigator.pushNamedAndRemoveUntil(
           context!,
@@ -137,7 +136,7 @@ class MyApi {
           "name": user.name!.value,
           "lastName": user.lastName!.value,
           "email": user.email!.value,
-          "phoneNumber": user.phoneNumber!.value,
+          "phoneNumb er": user.phoneNumber!.value,
           "password": user.pasword!.value,
           "passwordConfirm": user.passwordConfirm!.value,
           "description": user.description!.value
@@ -198,7 +197,7 @@ class MyApi {
     }
   }
 
-  Future<String> setImageAvatar(Uint8List bytes, String path) async {
+  Future<String> setImageAvatar(String path, BuildContext context) async {
     try {
       String? token = await Auth.instance.getToken()??"";
       String url = 'users/avatar';
@@ -221,9 +220,42 @@ class MyApi {
         ),
         data: formData,
       );
+      Dialogs.info(context, title: "Modify",content: "Modify avatar!");
       return response.data;
     }
     catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String> setMedia(Uint8List bytes, String path, String description, BuildContext context) async {
+    try {
+      print(description);
+      String? token = await Auth.instance.getToken()??"";
+      String url = 'media/create';
+      var formData = FormData.fromMap({
+        'description': description,
+        'file':  await MultipartFile.fromFile(path,
+                   filename: Extras.getFileName(path))
+      });
+
+      final Response response = await _dio.post(
+        url,
+
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'multipart/form-data;boundary=description',
+          },
+
+        ),
+        data:  formData,
+      );
+      Dialogs.info(context, title: "Create media",content: "Create media!");
+      return response.data;
+    }
+    catch (e) {
+      print(e);
       return e.toString();
     }
   }

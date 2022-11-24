@@ -68,8 +68,6 @@ class Auth {
   }
 }
 
-
-
 class Session {
   final String token;
   final int expirate;

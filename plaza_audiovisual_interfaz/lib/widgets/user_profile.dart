@@ -59,7 +59,8 @@ class _UserProfile extends State<UserProfile> {
                 children: [
                   Image.network(
                     user.medias![index].name!.value
-                  )
+                  ),
+                  SizedBox(height: responsive.dp(4)),
                 ],
               );
             },
