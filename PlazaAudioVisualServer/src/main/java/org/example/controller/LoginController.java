@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.example.config.APIConfig;
 import org.example.dto.login.ListLoginPageDTO;
 import org.example.dto.login.LoginDTO;
@@ -14,6 +15,7 @@ import org.example.exceptions.login.LoginsNotFoundException;
 import org.example.mapper.LoginMapper;
 import org.example.model.Login;
 import org.example.repositories.LoginRepository;
+import org.example.service.logins.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,16 +27,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(APIConfig.API_PATH + "/logins")
+@RequiredArgsConstructor
 public class LoginController {
     private final LoginRepository loginRepository;
+    private final LoginService loginService;
     private final LoginMapper loginMapper;
 
-    @Autowired
-    public LoginController(LoginRepository loginRepository, LoginMapper loginMapper) {
-        this.loginRepository = loginRepository;
-        this.loginMapper = loginMapper;
-    }
-
+    /**
+     * Obtiene todos los logins
+     * @return respuesta lista de login
+     */
     @ApiOperation(value = "Obtener todos los logins", notes = "Obtiene todos los logins")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = LoginDTO.class, responseContainer = "List"),
@@ -56,6 +58,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * obtiene todos los logins de manera pageada
+     * @param page
+     * @param size
+     * @return respuesta lista de logins
+     */
     @ApiOperation(value = "Obtiene una lista de logins", notes = "Obtiene una lista de logins paginada")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = ListLoginPageDTO.class),
@@ -63,7 +71,6 @@ public class LoginController {
             @ApiResponse(code = 401, message = "No autenticado"),
             @ApiResponse(code = 403, message = "No autorizado")
     })
-    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/page")
     public ResponseEntity<ListLoginPageDTO> findAllLogins(
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -84,7 +91,12 @@ public class LoginController {
         }
     }
 
-    @ApiOperation(value = "Obtener un producto por id", notes = "Obtiene un producto por id")
+    /**
+     * Obtener un login en base a su id
+     * @param id
+     * @return respuesta LoginDTO
+     */
+    @ApiOperation(value = "Obtener un login por id", notes = "Obtiene un login por id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = LoginDTO.class),
             @ApiResponse(code = 404, message = "Not Found", response = LoginsNotFoundException.class)
@@ -99,9 +111,19 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/{token}")
+    /**
+     * Obtener un login por el token
+     * @param token
+     * @return respuesta LoginDTO
+     */
+    @ApiOperation(value = "Obtener un login por el token", notes = "Obtiene un login por el token")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = LoginDTO.class),
+            @ApiResponse(code = 404, message = "Not Found", response = LoginsNotFoundException.class)
+    })
+    @GetMapping("/token/{token}")
     public ResponseEntity<LoginDTO> findByToken(@PathVariable String token) {
-        Login login = loginRepository.findByToken(token).orElse(null);
+        Login login = loginService.findByToken(token).orElse(null);
         if (login == null) {
             throw new LoginsNotFoundException();
         } else {
@@ -109,6 +131,11 @@ public class LoginController {
         }
     }
 
+    /**
+     * Creación del login
+     * @param loginDTO
+     * @return respuesta LoginDTO
+     */
     @ApiOperation(value = "Crear un login", notes = "Crea un login")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Created", response = LoginDTO.class),
@@ -126,6 +153,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Actualizar un login
+     * @param id
+     * @param login
+     * @return respuesta LoginDTO
+     */
     @ApiOperation(value = "Actualizar un login", notes = "Actualiza un login por su id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = LoginDTO.class),
@@ -152,6 +185,11 @@ public class LoginController {
         }
     }
 
+    /**
+     * Eliminar un login por su id
+     * @param id
+     * @return respuesta LoginDTO
+     */
     @ApiOperation(value = "Eliminar un login", notes = "Elimina un login en base a su id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = LoginDTO.class),

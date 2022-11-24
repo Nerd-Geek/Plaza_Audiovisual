@@ -1,0 +1,8 @@
+
+>
+java:S1948."(Make "medias" transient or serializable.(†‹Š‡
+=
+java:S19481"(Make "logins" transient or serializable.(«Ìœs
+i
+java:S6204³"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(œÌ¥‘
+\	java:S1073"BConstructor has 11 parameters, which is greater than 7 authorized.(šàÉãşÿÿÿÿ

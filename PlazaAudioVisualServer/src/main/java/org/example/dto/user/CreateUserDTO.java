@@ -20,7 +20,7 @@ public class CreateUserDTO {
     private String id;
     @NotBlank(message = "El nombre de usuario no puede estar vacío")
     @Column(unique = true)
-    private String userername;
+    private String username;
     @NotBlank(message = "El nombre del usuario no puede estar vacío")
     private String name;
     @NotBlank(message = "El apellido del usuario no puede estar vacío")
@@ -38,9 +38,9 @@ public class CreateUserDTO {
     private String image;
     private String description;
 
-    public CreateUserDTO(String userername, String name, String lastName, String email, String phoneNumber, String password, String passwordConfirm, String image, String description) {
+    public CreateUserDTO(String username, String name, String lastName, String email, String phoneNumber, String password, String passwordConfirm, String image, String description) {
         this.id = UUID.randomUUID().toString();
-        this.userername = userername;
+        this.username = username;
         this.name = name;
         this.lastName = lastName;
         this.email = email;

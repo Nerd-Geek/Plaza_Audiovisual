@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class UserNotFoundByUsernameException extends RuntimeException{
     private static final long serialVersionUID = 86546786467580533L;
 
+    /**
+     * No se encuentra por el nombre de usuario
+     * @param username
+     */
     public UserNotFoundByUsernameException(String username) {
         super("No se ha encontrado el user con el username: " + username);
     }

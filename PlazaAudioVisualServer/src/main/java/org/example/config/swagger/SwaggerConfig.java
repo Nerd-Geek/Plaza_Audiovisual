@@ -13,17 +13,17 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 
-@EnableWebMvc // Importante con el nuevo Swagger3 y Spring 2.6.x
+@EnableWebMvc
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
 
     @Bean
-    public Docket productApi() {
+    public Docket plazaApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
+                .apis(RequestHandlerSelectors.basePackage("org.example.controller"))
                 .paths(PathSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("ies.luisvives.serverpeluqueriadam.controller"))
                 .build()
                 .apiInfo(metaInfo());
     }

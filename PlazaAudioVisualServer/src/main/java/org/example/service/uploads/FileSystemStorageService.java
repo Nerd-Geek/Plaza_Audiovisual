@@ -32,6 +32,12 @@ public class FileSystemStorageService implements StorageService {
         this.rootLocation = Paths.get(path);
     }
 
+    /**
+     * Guardar un archivo
+     * @param file Contenido multiparte
+     * @return String (Ruta del fichero)
+     * @throws StorageException No se puede almacenar un fichero
+     */
     @Override
     public String store(MultipartFile file) {
         String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
@@ -55,6 +61,11 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
+    /**
+     * Cargar todos los ficheros
+     * @return Path
+     * @throws StorageException fallo al leer todos los ficheros
+     */
     @Override
     public Stream<Path> loadAll() {
         try {
@@ -66,11 +77,22 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
+    /**
+     * Cargar fichero por su nombre
+     * @param filename nombre del fichero
+     * @return Path
+     */
     @Override
     public Path load(String filename) {
         return rootLocation.resolve(filename);
     }
 
+    /**
+     * Cargar un fichero
+     * @param filename nombre del fichero
+     * @return Resource
+     * @throws StorageFileNotFoundException no se puede leer el fichero
+     */
     @Override
     public Resource loadAsResource(String filename) {
         try {
@@ -87,11 +109,18 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
+    /**
+     * Eliminar todos los ficheros
+     */
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
     }
 
+    /**
+     * Iniciar sistema de almacenamiento
+     * @throws StorageException error al iniciar
+     */
     @Override
     public void init() {
         try {
@@ -101,6 +130,11 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
+    /**
+     * Eliminar un fichero
+     * @param filename nombre del fichero
+     * @throws StorageException error al eliminar el fichero
+     */
     @Override
     public void delete(String filename) {
         String justFilename = StringUtils.getFilename(filename);
@@ -112,6 +146,11 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
+    /**
+     * Obtener la url de un fichero
+     * @param filename nombre del archivo
+     * @return String url
+     */
     @Override
     public String getUrl(String filename) {
         return MvcUriComponentsBuilder
