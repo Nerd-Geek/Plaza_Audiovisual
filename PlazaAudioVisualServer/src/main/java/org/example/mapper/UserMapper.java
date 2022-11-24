@@ -15,18 +15,29 @@ import java.util.stream.Collectors;
 public class UserMapper {
     private final ModelMapper modelMapper;
 
+    /**
+     * Convertir DAO a DTO
+     * @param user
+     * @return UserDTO
+     */
     public UserDTO toDTO(User user) {
         return modelMapper.map(user, UserDTO.class);
     }
 
-    public User fromDTO(CreateUserDTO userDTO) {
-        return modelMapper.map(userDTO, User.class);
-    }
-
+    /**
+     * Convertir DTO a DAO
+     * @param userDTO
+     * @return User
+     */
     public User fromDTOCreate(CreateUserDTO userDTO) {
         return modelMapper.map(userDTO, User.class);
     }
 
+    /**
+     * Convertir lista de DAO a lista de dTO
+     * @param users
+     * @return lista DTO
+     */
     public List<UserDTO> toDTO(List<User> users) {
         return users.stream().map(this::toDTO).collect(Collectors.toList());
     }

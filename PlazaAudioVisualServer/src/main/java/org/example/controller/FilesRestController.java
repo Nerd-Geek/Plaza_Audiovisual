@@ -23,11 +23,21 @@ import java.util.Map;
 public class FilesRestController {
     private StorageService storageService;
 
+    /**
+     * Constructor
+     * @param storageService
+     */
     @Autowired
     public void setStorageService(StorageService storageService) {
         this.storageService = storageService;
     }
 
+    /**
+     *
+     * @param filename
+     * @param request
+     * @return respuesta Resource
+     */
     @ApiOperation(value = "Obtiene un fichero en base a su nombre y url", notes = "Devuelve el fichero indicado por fichero por su nombre en url")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Resource.class),
@@ -54,6 +64,11 @@ public class FilesRestController {
                 .body(file);
     }
 
+    /**
+     * Subir fichero
+     * @param file
+     * @return nombre, objeto
+     */
     @ApiOperation(value = "Almacena un fichero", notes = "Almacena un fichero en el servidor y devuelve su URL")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Map.class),

@@ -18,6 +18,7 @@ import org.example.service.uploads.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,8 +33,14 @@ public class MediaController {
     private final StorageService storageService;
     private final UserRepository userRepository;
 
+    /**
+     * Constructor
+     * @param mediaRepository
+     * @param mediaMapper
+     * @param storageService
+     * @param userRepository
+     */
     @Autowired
-
     public MediaController(MediaRepository mediaRepository, MediaMapper mediaMapper, StorageService storageService, UserRepository userRepository) {
         this.mediaRepository = mediaRepository;
         this.mediaMapper = mediaMapper;
@@ -41,8 +48,12 @@ public class MediaController {
         this.userRepository = userRepository;
     }
 
-
-    @ApiOperation(value = "Obtener todos los servicios", notes = "Obtiene todos los servicios")
+    /**
+     * Obtener todas las medias
+     * @param limit
+     * @return respuesta lista de MediaDTO
+     */
+    @ApiOperation(value = "Obtener todas las medias", notes = "Obtiene todas las medias")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = MediaDTO.class, responseContainer = "List"),
             @ApiResponse(code = 404, message = "Not Found", response = MediaNotFoundException.class),
@@ -50,15 +61,15 @@ public class MediaController {
     })
     @GetMapping("/all")
     public ResponseEntity<List<MediaDTO>> findAll(@RequestParam(name = "limit") Optional<String> limit) {
-        List<Media> services = null;
+        List<Media> medias = null;
         try {
-            services = mediaRepository.findAll();
+            medias = mediaRepository.findAll();
 
-            if (limit.isPresent() && !services.isEmpty() && services.size() > Integer.parseInt(limit.get())) {
-                return ResponseEntity.ok(mediaMapper.toDTO(services.subList(0, Integer.parseInt(limit.get()))));
+            if (limit.isPresent() && !medias.isEmpty() && medias.size() > Integer.parseInt(limit.get())) {
+                return ResponseEntity.ok(mediaMapper.toDTO(medias.subList(0, Integer.parseInt(limit.get()))));
             } else {
-                if (!services.isEmpty()) {
-                    return ResponseEntity.ok(mediaMapper.toDTO(services));
+                if (!medias.isEmpty()) {
+                    return ResponseEntity.ok(mediaMapper.toDTO(medias));
                 } else {
                     throw new MediaNotFoundException();
                 }
@@ -68,7 +79,12 @@ public class MediaController {
         }
     }
 
-    @ApiOperation(value = "Obtener todos un servicio", notes = "Obtiene un servicio en base a su nombre")
+    /**
+     * Buscar una media por su nombre
+     * @param searchQuery
+     * @return respuesta media
+     */
+    @ApiOperation(value = "Obtener todas las medias", notes = "Obtiene todas las medias")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = MediaDTO.class, responseContainer = "List"),
             @ApiResponse(code = 404, message = "Not Found", response = MediaNotFoundException.class),
@@ -86,22 +102,32 @@ public class MediaController {
         }
     }
 
-    @ApiOperation(value = "Obtener un servicooo por id", notes = "Obtiene un producto por id")
+    /**
+     * Obtener una media por su id
+     * @param id
+     * @return respuesta MediaDTO
+     */
+    @ApiOperation(value = "Obtener una media por id", notes = "Obtiene una media por id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = MediaDTO.class),
             @ApiResponse(code = 404, message = "Not Found", response = MediaNotFoundException.class)
     })
     @GetMapping("/{id}")
     public ResponseEntity<MediaDTO> findById(@PathVariable String id) {
-        Media service = mediaRepository.findById(id).orElse(null);
-        if (service == null) {
+        Media media = mediaRepository.findById(id).orElse(null);
+        if (media == null) {
             throw new MediaNotFountException(id);
         } else {
-            return ResponseEntity.ok(mediaMapper.toDTO(service));
+            return ResponseEntity.ok(mediaMapper.toDTO(media));
         }
     }
 
-    @ApiOperation(value = "Crear un servicio", notes = "Crea un servicio")
+    /**
+     * Crear una media
+     * @param newMedia
+     * @return respuesta MediaDTO
+     */
+    @ApiOperation(value = "Crear una media", notes = "Crea una media")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Created", response = MediaDTO.class),
             @ApiResponse(code = 400, message = "Bad Request", response = GeneralBadRequestException.class)
@@ -113,7 +139,13 @@ public class MediaController {
         return ResponseEntity.ok(mediaMapper.toDTO(mediaInsert));
     }
 
-    @ApiOperation(value = "Actualizar un servicio", notes = "Actualiza un servicio en base a su id")
+    /**
+     * Actualizar una media por su id
+     * @param id
+     * @param newService
+     * @return respuesta MediaDTO
+     */
+    @ApiOperation(value = "Actualizar una media", notes = "Actualiza una media en base a su id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = MediaDTO.class),
             @ApiResponse(code = 404, message = "Not Found", response = MediaNotFoundException.class),
@@ -122,27 +154,31 @@ public class MediaController {
     @PutMapping("/{id}")
     public ResponseEntity<MediaDTO> update(@PathVariable String id, @RequestBody MediaDTO newService) {
         try {
-            UserMapper mapper;
-            Media serviceUpdated = mediaRepository.findById(id).orElse(null);
-            if (serviceUpdated == null) {
+            Media mediaUpdated = mediaRepository.findById(id).orElse(null);
+            if (mediaUpdated == null) {
                 throw new MediaNotFountException(id);
             } else {
 
-                serviceUpdated.setSize(newService.getSize());
-                serviceUpdated.setType(newService.getType());
-                serviceUpdated.setName(newService.getName());
-                serviceUpdated.setDescription(newService.getDescription());
-                serviceUpdated.setDimension(newService.getDimension());
-                serviceUpdated = mediaRepository.save(serviceUpdated);
+                mediaUpdated.setSize(newService.getSize());
+                mediaUpdated.setType(newService.getType());
+                mediaUpdated.setName(newService.getName());
+                mediaUpdated.setDescription(newService.getDescription());
+                mediaUpdated.setDimension(newService.getDimension());
+                mediaUpdated = mediaRepository.save(mediaUpdated);
 
-                return ResponseEntity.ok(mediaMapper.toDTO(serviceUpdated));
+                return ResponseEntity.ok(mediaMapper.toDTO(mediaUpdated));
             }
         } catch (Exception e) {
             throw new GeneralBadRequestException("Actualizar", "Error al actualizar el service. Campos incorrectos.");
         }
     }
 
-    @ApiOperation(value = "Actualizar un servicio", notes = "Actualiza un servicio en base a su id")
+    /**
+     * Eliminar una media por su id
+     * @param id
+     * @return respuesta MediaDTO
+     */
+    @ApiOperation(value = "Elimina una media", notes = "Elimina una media en base a su id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = MediaDTO.class),
             @ApiResponse(code = 404, message = "Not Found", response = MediaNotFoundException.class),
@@ -151,28 +187,28 @@ public class MediaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<MediaDTO> deleteService(@PathVariable String id) {
 
-        Media service = mediaRepository.findById(id).orElse(null);
-        if (service == null) {
+        Media media = mediaRepository.findById(id).orElse(null);
+        if (media == null) {
             throw new MediaNotFountException(id);
         }
         try {
-            mediaRepository.delete(service);
-            return ResponseEntity.ok(mediaMapper.toDTO(service));
+            mediaRepository.delete(media);
+            return ResponseEntity.ok(mediaMapper.toDTO(media));
         } catch (Exception e) {
             throw new GeneralBadRequestException("Eliminar", "Error al borrar el service");
         }
     }
 
-    @ApiOperation(value = "Crea un servicio con imagen", notes = "Crea un servicio con imagen")
+    @ApiOperation(value = "Crea una media con imagen", notes = "Crea una media con imagen")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = MediaDTO.class),
             @ApiResponse(code = 400, message = "Bad Request", response = GeneralBadRequestException.class),
     })
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> newMedia(
+    public ResponseEntity<MediaDTO> newMedia(
             @RequestPart("description") String description,
             @RequestPart("file") MultipartFile file,
-            @RequestPart("user") User user) {
+            @AuthenticationPrincipal User user) {
         MediaDTO mediaDTO = new MediaDTO();
         Media media = mediaMapper.fromDTO(mediaDTO);
 
@@ -180,7 +216,6 @@ public class MediaController {
             String imagen = storageService.store(file);
             String urlImagen = storageService.getUrl(imagen);
             media.setSize(file.getSize());
-            System.out.println(urlImagen);
             String[] type = urlImagen.split("\\.");
             media.setType(type[4]);
             media.setName(urlImagen);

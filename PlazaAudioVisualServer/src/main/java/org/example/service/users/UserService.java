@@ -20,26 +20,55 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Encontrar al usuario por nombre
+     * @param username nombre de usuario
+     * @return Optional de User
+     */
     public Optional<User> findByUsernameIgnoreCase(String username) {
         return userRepository.findByUsernameIgnoreCase(username);
     }
 
+    /**
+     * Encontrar usuarios por nombre
+     * @param username nombre de usuario
+     * @return Lista de User
+     */
     public List<User> findByUsernameContainsIgnoreCase(String username) {
         return userRepository.findByUsernameContainsIgnoreCase(username);
     }
 
+    /**
+     * Encontrar todos los usuarios
+     * @return Lista de usuarios
+     */
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
+    /**
+     * Buscar usuario por ID
+     * @param id ID de usuario
+     * @return Optional de usuario
+     */
     public Optional<User> findById(String id) {
         return userRepository.findById(id);
     }
 
+    /**
+     * Buscar usuario por email
+     * @param email email de usuario
+     * @return usuario
+     */
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
+    /**
+     * Crear usuario
+     * @param newUser CreateUserDTO (crear nuevo usuario)
+     * @return Usuario creado
+     */
     public User save(CreateUserDTO newUser) {
         if (newUser.getPassword().equals(newUser.getPasswordConfirm())) {
             Set<UserRol> defaultRoles = new HashSet<>();
@@ -66,6 +95,12 @@ public class UserService {
         }
     }
 
+    /**
+     * Actualizar un usuario
+     * @param userModifyDTO UserModifyDTO - Modificar usuario
+     * @param user User a modificar
+     * @return Usuario actualizado
+     */
     public User updateUser(CreateUserDTO userModifyDTO, User user) {
         String username = userModifyDTO.getUsername();
         String name = userModifyDTO.getName();

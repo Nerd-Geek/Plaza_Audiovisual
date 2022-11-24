@@ -11,6 +11,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LoginService {
     private final LoginRepository loginRepository;
+
+    /**
+     * Buscar por token
+     * @param token
+     * @return Login
+     */
     public Optional<Login> findByToken(String token) {
         return loginRepository.findByToken(token);
     }

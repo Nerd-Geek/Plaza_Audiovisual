@@ -58,6 +58,11 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
 
+    /**
+     * Obtener todos los usuarios
+     * @param searchQuery
+     * @return respuesta lista de usuarios
+     */
     @ApiOperation(value = "Obtener todos los usuarios", notes = "Obtiene todos los usuarios")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = UserDTO.class, responseContainer = "List"),
@@ -80,6 +85,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Obtener un usuario por su id
+     * @param id
+     * @return respuesta UserDTO
+     */
     @ApiOperation(value = "Obtener un usuario por id", notes = "Obtiene un usuario en base al id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = UserDTO.class),
@@ -95,6 +105,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Buscar un usuario por su nombre
+     * @param username
+     * @return respuesta UserDTO
+     */
     @ApiOperation(value = "Obtener un usuario por username", notes = "Obtiene un usuario en base al username")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = UserDTO.class),
@@ -110,6 +125,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Buscar un usuario por su email
+     * @param email
+     * @return respuesta UserDTO
+     */
     @ApiOperation(value = "Obtener un usuario por email", notes = "Obtiene un usuario en base al email")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = UserDTO.class),
@@ -125,8 +145,11 @@ public class UserController {
         }
     }
 
-
-    @CrossOrigin(origins = "http://localhost:8080")
+    /**
+     * Obtener un usuario
+     * @param user
+     * @return respuesta UserDTO
+     */
     @ApiOperation(value = "Obtener un usuario", notes = "Obtiene un usuario que esta logueado")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = UserDTO.class),
@@ -137,7 +160,11 @@ public class UserController {
         return userMapper.toDTO(user);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    /**
+     * Loguear un usuario
+     * @param loginRequest
+     * @return respuesta JwtUserResponse
+     */
     @ApiOperation(value = "Loguear un usuario", notes = "Loguea un usuario")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Created", response = UserDTO.class),
@@ -160,6 +187,12 @@ public class UserController {
         return convertUserEntityAndTokenToJwtUserResponse(user, jwtToken);
     }
 
+    /**
+     * Crear un usuario
+     * @param newUser
+     * @return respuesta UserDTO
+     * @throws MalformedURLException
+     */
     @ApiOperation(value = "Crear un usuario", notes = "Crea un usuario")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Created", response = UserDTO.class),
@@ -180,6 +213,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Crear un usuario
+     * @param file
+     * @param createUserDTO
+     * @return respuesta UserDTI
+     */
     @ApiOperation(value = "Crear un usuario", notes = "Crea un usuario")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Created", response = UserDTO.class),
@@ -204,6 +243,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Actualizar un usuario
+     * @param user
+     * @param userModifyDTO
+     * @return respuesta UserDTO
+     */
     @ApiOperation(value = "Actualizar usuario", notes = "Actualiza el usuario logueado")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = CreateUserDTO.class),
@@ -216,6 +261,17 @@ public class UserController {
         return ResponseEntity.ok(userMapper.toDTO(created));
     }
 
+    /**
+     * Actualizar el avatar de un usuario
+     * @param user
+     * @param file
+     * @return respuesta avatar
+     */
+    @ApiOperation(value = "Actualizar el avatar del usuario", notes = "Actualiza el avatar del usuario")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = CreateUserDTO.class),
+            @ApiResponse(code = 404, message = "Not Found", response = GeneralBadRequestException.class)
+    })
     @PostMapping("/avatar")
     public ResponseEntity<?> updateAvatar(@AuthenticationPrincipal User user, @RequestPart("file") MultipartFile file) {
         String urlImage = null;
@@ -237,7 +293,12 @@ public class UserController {
         }
     }
 
-
+    /**
+     *
+     * @param user
+     * @param jwtToken
+     * @return JwtUserResponse
+     */
     private JwtUserResponse convertUserEntityAndTokenToJwtUserResponse(User user, String jwtToken) {
         return JwtUserResponse
                 .jwtUserResponseBuilder()
