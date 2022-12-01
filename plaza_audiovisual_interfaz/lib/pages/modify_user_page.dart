@@ -44,9 +44,8 @@ class _ModifyUserPage extends State<ModifyUserPage> {
 
   _pickImage() async {
     final XFile? pickedFile = await Extras.pickImage(false);
-    final bytes = await pickedFile?.readAsBytes();
     if(pickedFile != null) {
-     final String result = await MyApi.instance.setImageAvatar(bytes!, pickedFile.path);
+     final String result = await MyApi.instance.setImageAvatar(pickedFile.path, context);
 
      if(result != null) {
        user.image = result.obs;

@@ -19,7 +19,7 @@ class UserProfileForm extends StatelessWidget {
     return Column(
         children: [
           Image.network(
-              pathImage ??"http://192.168.29.141:6668/rest/files/1667208375733_loading_gif.gif",
+              pathImage ??"http://carlosmoreno.duckdns.org:9090/rest/files/1667208375733_loading_gif.gif",
               width: responsive.wp(20),
               alignment: Alignment.center,
               ),

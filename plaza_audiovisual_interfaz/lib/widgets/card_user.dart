@@ -35,7 +35,7 @@ class CardUser extends StatelessWidget{
     );
     final cardDetail =  Container(
       width: double.maxFinite,
-      margin: EdgeInsets.only(top: responsive.hp(33), bottom: responsive.hp(8)),
+      margin: EdgeInsets.only(top: responsive.hp(30), bottom: responsive.hp(8)),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9),

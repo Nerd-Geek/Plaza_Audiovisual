@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:plaza_audiovisual_interfaz/pages/login_page.dart';
 import 'package:plaza_audiovisual_interfaz/pages/register_page.dart';
 import 'package:plaza_audiovisual_interfaz/pages/home_page.dart';
+import 'package:plaza_audiovisual_interfaz/widgets/search_user.dart';
 import 'package:plaza_audiovisual_interfaz/widgets/user_profile.dart';
 import 'package:plaza_audiovisual_interfaz/widgets/user_profile_form.dart';
+
+import '../widgets/create_media.dart';
 
 class NavBar extends StatefulWidget {
   static const routeName = 'navBar';
@@ -20,8 +23,8 @@ class _NavBar extends State<NavBar> {
 
   final List<Widget> _widgetsChildren = [
     HomePage(),
-    LoginPage(),
-    RegisterPage(),
+    SearchUser(),
+    CreateMedia(),
     const UserProfile(),
   ];
 

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plaza_audiovisual_interfaz/model/media.dart';
 import 'package:plaza_audiovisual_interfaz/utils/data_state.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,7 @@ class ListUser extends StatefulWidget {
 class _ListUser extends State<ListUser> {
 
   final List<User> user = <User>[];
+  final List<String> medias = <String>[];
   @override
   void initState() {
     super.initState();
@@ -37,7 +39,6 @@ class _ListUser extends State<ListUser> {
   }
   @override
   Widget build(BuildContext context) {
-
     final Responsive responsive = Responsive.of(context);
     return SizedBox(
       height: responsive.hp(70),

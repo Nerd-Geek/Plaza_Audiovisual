@@ -17,7 +17,6 @@ class Responsive {
     _width = size.width;
     _height = size.height;
 
-    // c2 + a2 + b2 => c = srt(a2+b2)
     _diagonal = math.sqrt(math.pow(_width!, 2)+math.pow(_height!, 2));
 
     _isTablet = size.shortestSide >= 600;

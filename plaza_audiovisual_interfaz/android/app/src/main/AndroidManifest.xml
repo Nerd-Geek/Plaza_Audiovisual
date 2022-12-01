@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.api_rest">
    <application
-        android:label="api_rest"
+        android:label="Plaza Audiovisual"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
