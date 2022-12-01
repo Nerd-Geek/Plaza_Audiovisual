@@ -6,7 +6,7 @@ class IconContainer extends StatelessWidget {
   final String path;
 
   IconContainer({
-    this.path = "http://192.168.29.141:6668/rest/files/1666536760224_avatar2.png",
+    this.path = "http://carlosmoreno.duckdns.org:9090/rest/files/1666536760224_avatar2.png",
     required this.size
   })
     : assert(size != null && size > 0);

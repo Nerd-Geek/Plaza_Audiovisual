@@ -39,6 +39,16 @@ class _UserProfile extends State<UserProfile> {
         });
     });
   }
+
+  _delete(String id) async {
+    MyApi myApi = MyApi.instance;
+
+    await myApi.deleteMedia(context,id: id).then((value) {
+      setState(() {
+        _submit();
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -59,6 +69,21 @@ class _UserProfile extends State<UserProfile> {
                 children: [
                   Image.network(
                     user.medias![index].name!.value
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      _delete(user.medias![index].id!.value);
+                    },
+                    style: const ButtonStyle(
+                      foregroundColor: MaterialStatePropertyAll<Color>(Colors.white),
+                      backgroundColor: MaterialStatePropertyAll<Color>(Colors.pinkAccent),
+                    ),
+                    child: Text(
+                      "Delete Media",
+                      style: TextStyle(
+                          fontSize: responsive.dp(2)
+                      ),
+                    ),
                   ),
                   SizedBox(height: responsive.dp(4)),
                 ],

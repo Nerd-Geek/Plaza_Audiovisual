@@ -17,7 +17,7 @@ class UserProfileSearch extends StatelessWidget {
       children: [
         SizedBox(height: responsive.dp(2)),
         Image.network(
-          user.image!.value ??"http://192.168.29.141:6668/rest/files/1667208375733_loading_gif.gif",
+          user.image!.value ??"http://carlosmoreno.duckdns.org:9090/rest/files/1667208375733_loading_gif.gif",
           width: responsive.wp(20),
           alignment: Alignment.center,
         ),

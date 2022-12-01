@@ -48,7 +48,7 @@ class _CreateMedia extends State<CreateMedia> {
             SizedBox(height: responsive.dp(5)),
             _pickedFile !=null ? Image.file(
                 _pickedFile!,width: responsive.wp(70),
-            ): Image.network("http://192.168.29.141:6668/rest/files/1667988548358_default-image.jpg"),
+            ): Image.network("http://carlosmoreno.duckdns.org:9090/rest/files/1667988548358_default-image.jpg"),
             SizedBox(height: responsive.dp(2)),
             InputText(
               keyBoardType: TextInputType.text,

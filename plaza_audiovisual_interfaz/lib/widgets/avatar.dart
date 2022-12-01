@@ -28,7 +28,7 @@ class Avatar extends StatelessWidget {
           ),
           child: ClipOval(
             child: Image.network(
-              path??"http://192.168.29.141:6668/rest/files/1667208375733_loading_gif.gif",
+              path??"http://carlosmoreno.duckdns.org:9090/rest/files/1667208375733_loading_gif.gif",
               width: imageSize,
               height: imageSize,
               fit: BoxFit.cover,

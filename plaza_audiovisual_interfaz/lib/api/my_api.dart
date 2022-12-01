@@ -16,7 +16,7 @@ import 'package:plaza_audiovisual_interfaz/utils/extras.dart';
 import '../model/user.dart';
 import '../utils/auth.dart';
 
-const baseUrl = 'http://192.168.29.141:6668/rest/';
+const baseUrl = 'http://carlosmoreno.duckdns.org:9090/rest/';
 
 class MyApi {
   MyApi._internal();
@@ -117,6 +117,26 @@ class MyApi {
     }
   }
 
+  Future<String?> deleteMedia(BuildContext context,{required String id}) async {
+    try {
+      String? token = "";
+      await Auth.instance.getToken().then((value) =>  token = value);
+      final Response response = await _dio.delete(
+          'media/$id',
+
+          options: Options(
+              headers: {
+                'Authorization': 'Bearer $token',
+              }
+          )
+      );
+      Dialogs.info(context, title: "Delete media",content: "Delete media!");
+      return id;
+    } catch(e) {
+      return null;
+    }
+  }
+
   Future<void> updateUser({required User user, required BuildContext context}) async {
     final ProgressDialog progressDialog = ProgressDialog(context);
     try {
@@ -169,6 +189,7 @@ class MyApi {
       List<User> users = [];
       for (int i = 0; i < response.data.length; i++) {
         users.add(User.fromJson(response.data[i]));
+        print(users[i].image);
       }
       return users;
     }
