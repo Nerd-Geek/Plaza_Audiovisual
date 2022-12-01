@@ -205,7 +205,7 @@ public class UserController {
         } else {
             User user = userMapper.fromDTOCreate(newUser);
 
-            URL firstURL = new URL("http://192.168.29.141:6668/rest/files/1666536760224_avatar2.png");
+            URL firstURL = new URL("http://carlosmoreno.duckdns.org:9090/rest/files/1666536760224_avatar2.png");
             String imagen = firstURL.toString();
             user.setImage(imagen);
             newUser.setImage(user.getImage());

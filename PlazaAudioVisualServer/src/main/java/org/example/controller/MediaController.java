@@ -22,6 +22,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -217,7 +218,7 @@ public class MediaController {
             String urlImagen = storageService.getUrl(imagen);
             media.setSize(file.getSize());
             String[] type = urlImagen.split("\\.");
-            media.setType(type[4]);
+            media.setType(type[2]);
             media.setName(urlImagen);
             media.setDescription(description);
             media.setDimension(0);
